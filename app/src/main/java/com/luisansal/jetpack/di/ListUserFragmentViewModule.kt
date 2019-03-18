@@ -1,6 +1,5 @@
 package com.luisansal.jetpack.di
 
-import com.luisansal.jetpack.MainActivity
 import com.luisansal.jetpack.ui.fragments.ListUserFragment
 import com.luisansal.jetpack.ui.fragments.mvp.ListUserFragmentMVP
 import dagger.Binds
