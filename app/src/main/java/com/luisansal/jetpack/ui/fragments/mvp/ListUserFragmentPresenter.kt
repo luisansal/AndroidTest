@@ -7,8 +7,10 @@ import androidx.paging.PagedList
 import com.luisansal.jetpack.model.domain.User
 import com.luisansal.jetpack.ui.adapters.PagedUserAdapter
 import com.luisansal.jetpack.ui.fragments.ListUserFragment
+import javax.inject.Inject
 
-class ListUserFragmentPresenter(private val mView: ListUserFragmentMVP.View) : ListUserFragmentMVP.Presenter {
+class ListUserFragmentPresenter @Inject constructor(private val mView: ListUserFragmentMVP.View,
+                                                    private val mInteractor: ListUserFragmentMVP.Interactor) : ListUserFragmentMVP.Presenter {
     override val numUsers: Int
         get() = mNumUsers
 
@@ -23,8 +25,6 @@ class ListUserFragmentPresenter(private val mView: ListUserFragmentMVP.View) : L
         get() {
             return (mView as ListUserFragment).context!!
         }
-
-    private val mInteractor: ListUserFragmentMVP.Interactor = ListUserFragmentInteractor(this)
 
     override fun validarRvUsuariosPopulado() {
         mInteractor.validarRvUsuariosPopulado()
@@ -60,6 +60,7 @@ class ListUserFragmentPresenter(private val mView: ListUserFragmentMVP.View) : L
     }
 
     override fun init() {
+        mInteractor.attachPresenter(this)
         setupRoomViewModel()
         setupRv()
         mInteractor.setupLivePaged()

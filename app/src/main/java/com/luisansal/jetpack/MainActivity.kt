@@ -21,6 +21,7 @@ import com.luisansal.jetpack.model.MyApplication
 import com.luisansal.jetpack.model.repository.UserRepository
 import com.luisansal.jetpack.ui.MainActivityPresenter
 import com.luisansal.jetpack.ui.mvp.MainActivityMVP
+import dagger.android.AndroidInjection
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), ActionsViewPagerListener, MainActivityMVP.View {
@@ -88,7 +89,8 @@ class MainActivity : AppCompatActivity(), ActionsViewPagerListener, MainActivity
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        (application as MyApplication).getAppComponent().inject(this)
+//        (application as MyApplication).getAppComponent().inject(this)
+        AndroidInjection.inject(this)
         setContentView(R.layout.activity_main)
         mViewPager = findViewById(R.id.pager)
         val presenter = MainActivityPresenter(this)

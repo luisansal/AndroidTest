@@ -1,15 +1,29 @@
 package com.luisansal.jetpack.di
 
 import com.luisansal.jetpack.MainActivity
-import com.luisansal.jetpack.ui.fragments.ListUserFragment
-import com.luisansal.jetpack.ui.fragments.mvp.ListUserFragmentInteractor
+import com.luisansal.jetpack.model.MyApplication
 import dagger.Component
 import javax.inject.Singleton
+import dagger.BindsInstance
+import dagger.android.support.AndroidSupportInjectionModule
 
 
 @Singleton
-@Component(modules = [AppModule::class, RoomModule::class])
+@Component(modules = [ AndroidSupportInjectionModule::class, AppModule::class, BuildersModule::class])
 interface AppComponent {
-    fun inject(mainActivity: MainActivity)
-    fun inject(listUserFragment: ListUserFragment)
+
+    @Component.Builder
+    interface Builder {
+
+        @BindsInstance
+        fun application(application: MyApplication): Builder
+
+//        fun appModule(appModule: AppModule) : Builder
+
+        fun build(): AppComponent
+    }
+
+    fun inject(myApplication: MyApplication)
+
+//    fun inject(myActivity: MainActivity)
 }

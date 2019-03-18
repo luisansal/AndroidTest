@@ -2,22 +2,30 @@ package com.luisansal.jetpack.ui.fragments.mvp
 
 import androidx.paging.LivePagedListBuilder
 import com.luisansal.jetpack.model.repository.UserRepository
+import javax.inject.Inject
 
-class ListUserFragmentInteractor(val presenter: ListUserFragmentMVP.Presenter) : ListUserFragmentMVP.Interactor {
+class ListUserFragmentInteractor @Inject constructor(
+                                                     private val userRepository: UserRepository) : ListUserFragmentMVP.Interactor {
+
+    lateinit var mPresenter : ListUserFragmentMVP.Presenter
+
+    override fun attachPresenter(presenter : ListUserFragmentMVP.Presenter){
+        mPresenter = presenter
+    }
 
     override fun validarRvUsuariosPopulado() {
-        if (presenter.adapterUsuarios.itemCount > 0) {
-            presenter.rvUsuariosPopulado()
+        if (mPresenter.adapterUsuarios.itemCount > 0) {
+            mPresenter.rvUsuariosPopulado()
         } else {
-            presenter.rvUsuariosNoPopulado()
+            mPresenter.rvUsuariosNoPopulado()
         }
     }
 
     override fun validarCantidadPaginacion(numeroComparar: Int) {
-        if (numeroComparar == presenter.numUsers) {
-            presenter.cantidadValida()
+        if (numeroComparar == mPresenter.numUsers) {
+            mPresenter.cantidadValida()
         } else {
-            presenter.cantidadInvalida()
+            mPresenter.cantidadInvalida()
         }
     }
 
@@ -30,10 +38,10 @@ class ListUserFragmentInteractor(val presenter: ListUserFragmentMVP.Presenter) :
         //                .setPrefetchDistance(100)
         //                .setEnablePlaceholders(true)
         //                .build();
-        val users = LivePagedListBuilder(UserRepository.newInstance(presenter.context).allUsersPaging, 50).build()
+        val users = LivePagedListBuilder(userRepository.allUsersPaging, 50).build()
 
-        presenter.populateRoomViewModel(users)
-        presenter.populateAdapterRv(users)
+        mPresenter.populateRoomViewModel(users)
+        mPresenter.populateAdapterRv(users)
 
     }
 

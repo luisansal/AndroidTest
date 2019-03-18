@@ -14,7 +14,7 @@ import com.luisansal.jetpack.interfaces.CrudListener
 import com.luisansal.jetpack.ui.fragments.mvp.ListUserFragmentMVP
 import com.luisansal.jetpack.ui.fragments.mvp.ListUserFragmentPresenter
 import com.luisansal.jetpack.ui.viewmodel.RoomViewModel
-import dagger.android.AndroidInjection
+import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject
 
 class ListUserFragment : Fragment(), ListUserFragmentMVP.View {
@@ -24,7 +24,7 @@ class ListUserFragment : Fragment(), ListUserFragmentMVP.View {
             mPresenter = value
         }
 
-//    @Inject
+    @Inject
     lateinit var mPresenter : ListUserFragmentPresenter
 
     override fun validarRvUsuariosPopulado() {
@@ -75,7 +75,7 @@ class ListUserFragment : Fragment(), ListUserFragmentMVP.View {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        AndroidInjection.inject(this)
+        AndroidSupportInjection.inject(this)
         if (arguments != null) {
         }
     }
@@ -89,7 +89,6 @@ class ListUserFragment : Fragment(), ListUserFragmentMVP.View {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView(view)
-        mPresenter = ListUserFragmentPresenter(this)
         mPresenter.init()
     }
 
