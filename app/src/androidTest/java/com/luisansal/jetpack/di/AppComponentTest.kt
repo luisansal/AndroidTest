@@ -1,6 +1,7 @@
 package com.luisansal.jetpack.di
 
-import com.luisansal.jetpack.MainActivity
+import android.app.Application
+import com.luisansal.jetpack.LiveDataPresenterTest
 import com.luisansal.jetpack.model.MyApplication
 import dagger.Component
 import javax.inject.Singleton
@@ -10,21 +11,18 @@ import dagger.android.support.AndroidSupportInjectionModule
 
 @Singleton
 @Component(modules = [ AndroidSupportInjectionModule::class, AppModule::class, BuildersModule::class])
-interface AppComponent {
+interface AppComponentTest : AppComponent {
 
     @Component.Builder
-    interface Builder {
+    interface Builder : AppComponent.Builder {
 
         @BindsInstance
-        fun application(application: MyApplication): Builder
+        override fun application(application: MyApplication): Builder
 
 //        fun appModule(appModule: AppModule) : Builder
 
-        fun build(): AppComponent
-
+        override fun build(): AppComponentTest
     }
 
-    fun inject(myApplication: MyApplication)
-
-//    fun inject(myActivity: MainActivity)
+    fun inject(injected: LiveDataPresenterTest)
 }

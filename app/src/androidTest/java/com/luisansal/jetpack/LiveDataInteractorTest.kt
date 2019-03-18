@@ -38,7 +38,7 @@ class LiveDataInteractorTest {
 
     @Before
     fun setup() {
-        interactor = ListUserFragmentInteractor(listUserFragmentPresenter)
+//        interactor = ListUserFragmentInteractor(listUserFragmentPresenter)
         mContext = ApplicationProvider.getApplicationContext<Context>()
 
 //        val db = Room.inMemoryDatabaseBuilder(
