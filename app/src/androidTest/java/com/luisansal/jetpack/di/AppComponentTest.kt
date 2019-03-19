@@ -1,6 +1,5 @@
 package com.luisansal.jetpack.di
 
-import android.app.Application
 import com.luisansal.jetpack.LiveDataInteractorTest
 import com.luisansal.jetpack.LiveDataPresenterTest
 import com.luisansal.jetpack.model.MyApplication

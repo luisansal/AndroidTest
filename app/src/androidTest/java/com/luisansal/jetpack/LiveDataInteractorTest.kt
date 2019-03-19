@@ -73,11 +73,13 @@ class LiveDataInteractorTest {
 
     @Test
     fun validarRvUsuariosPopulado() {
+        mInteractor.attachPresenter(listUserFragmentPresenter)
+
         val user = User()
         user.name = "Luis"
         user.dni = "70668281"
 
-        UserRepository.newInstance(mContext).save(user)
+        userRepository.save(user)
         val allUsers = LivePagedListBuilder(userRepository.allUsersPaging, 50).build()
 
         val adapter = PagedUserAdapter()

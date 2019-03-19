@@ -89,26 +89,40 @@ dependencies {
     implementation "androidx.paging:paging-rxjava2:$paging_version"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version" // use -ktx for Kotlin
 
-    // Dagger
+    // Dagger Core
     implementation "com.google.dagger:dagger:$project.daggerVersion"
     implementation "com.google.dagger:dagger-android-support:$project.daggerVersion"
     kapt "com.google.dagger:dagger-android-processor:$project.daggerVersion"
     kapt "com.google.dagger:dagger-compiler:$project.daggerVersion"
+
+    //Dagger para propositos de Test
     kaptAndroidTest "com.google.dagger:dagger-compiler:$project.daggerVersion"
 
+    //Habilita la libreria JUnit
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:rules:1.0.2'
+
+    //Habilita el uso de test Rules
     testImplementation 'com.android.support.test:rules:1.0.2'
+    androidTestImplementation 'com.android.support.test:rules:1.0.2'
+
+    //Herramientas de core para test unitarios, instrumentacion y UI
+    testImplementation 'androidx.test:core:1.1.0'
+    androidTestImplementation 'androidx.test:core:1.1.0'
+
+    //Herramientas de test para uso de Instrumentacion y UI
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
-    androidTestImplementation 'androidx.test:core:1.1.0'
-    testImplementation 'androidx.test:core:1.1.0'
-    testImplementation 'org.mockito:mockito-core:2.19.0'
-    androidTestImplementation 'org.mockito:mockito-android:2.18.0'
+
+    //Habilita el rule InstantTaskExecutorRule
     testImplementation "android.arch.core:core-testing:1.1.1"
     androidTestImplementation "android.arch.core:core-testing:1.1.1"
 
+    //Mockito
+    testImplementation 'org.mockito:mockito-core:2.19.0'
+    androidTestImplementation 'org.mockito:mockito-android:2.18.0'
+
+    //Herramienta que provee clases para test de Fragments
     debugImplementation 'androidx.fragment:fragment-testing:1.1.0-alpha05'
 
 }

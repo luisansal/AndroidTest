@@ -33,7 +33,6 @@ class MainActivityTest2
     @Mock
     lateinit var listUserFragmentPresenter: ListUserFragmentMVP.Presenter
 
-    lateinit var interactor: ListUserFragmentInteractor
 
     private lateinit var mDatabase: MyRoomDatabase
 
@@ -41,7 +40,7 @@ class MainActivityTest2
 
     @Before
     fun setup() {
-        interactor = ListUserFragmentInteractor(listUserFragmentPresenter)
+
         mDatabase = Room.inMemoryDatabaseBuilder(mContext,
                 MyRoomDatabase::class.java!!)
                 .allowMainThreadQueries()
@@ -59,41 +58,12 @@ class MainActivityTest2
     @Test
     fun obtenerListadoUsuarios() {
 
-        Mockito.`when`(listUserFragmentPresenter.context).thenReturn(mContext)
 
-//        val adapter = PagedUserAdapter()
-//        val pagedList = PagedList<User>()
-//
-//        adapter.submitList()
-//        Mockito.`when`(listUserFragmentPresenter.adapterUsuarios).thenReturn()
-
-
-
-//        Mockito.`when`(listUserFragmentPresenter.adapterUsuarios).thenReturn(adapter)
-
-        interactor.setupLivePaged()
-        interactor.validarRvUsuariosPopulado()
-
-        Mockito.verify(listUserFragmentPresenter).rvUsuariosNoPopulado()
     }
 
-    fun <T> mockPagedList(list: List<T>): PagedList<T> {
-        val pagedList = Mockito.mock(PagedList::class.java) as PagedList<T>
-        Mockito.`when`(pagedList.get(ArgumentMatchers.anyInt())).then { invocation ->
-            val index = invocation.arguments.first() as Int
-            list[index]
-        }
-        Mockito.`when`(pagedList.size).thenReturn(list.size)
-        return pagedList
-    }
 
     @Test
     fun cantidadAdecuadaDePaginacion() {
-        Mockito.`when`(listUserFragmentPresenter.context).thenReturn(mContext)
 
-        interactor.setupLivePaged()
-        interactor.validarCantidadPaginacion(50)
-
-        Mockito.verify(listUserFragmentPresenter).cantidadValida()
     }
 }
