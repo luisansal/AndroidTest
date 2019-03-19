@@ -5,6 +5,9 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.LiveData
 import androidx.paging.LivePagedListBuilder
 import androidx.test.core.app.ApplicationProvider
+import androidx.test.rule.ActivityTestRule
+import com.luisansal.jetpack.di.DaggerAppComponentTest
+import com.luisansal.jetpack.model.MyApplication
 import com.luisansal.jetpack.model.domain.User
 import com.luisansal.jetpack.model.repository.UserRepository
 import com.luisansal.jetpack.ui.adapters.PagedUserAdapter
@@ -19,6 +22,7 @@ import org.mockito.Mockito
 import org.mockito.Mockito.verify
 import org.mockito.junit.MockitoJUnitRunner
 import java.lang.Thread.sleep
+import javax.inject.Inject
 
 
 @RunWith(MockitoJUnitRunner::class)
@@ -27,18 +31,28 @@ class LiveDataInteractorTest {
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 
+    @get:Rule
+    var mActivity = ActivityTestRule(MainActivity::class.java)
+
     @Mock
     lateinit var listUserFragmentPresenter: ListUserFragmentMVP.Presenter
 
     lateinit var mContext: Context
 
-    lateinit var interactor: ListUserFragmentInteractor
+    @Inject
+    lateinit var mInteractor: ListUserFragmentInteractor
+
+    @Inject
+    lateinit var userRepository: UserRepository
 
 //    private lateinit var userDao: UserDao
 
     @Before
     fun setup() {
-//        interactor = ListUserFragmentInteractor(listUserFragmentPresenter)
+        val app = mActivity.activity.applicationContext as MyApplication
+        DaggerAppComponentTest.builder().application(app)
+                .build()
+                .inject(this)
         mContext = ApplicationProvider.getApplicationContext<Context>()
 
 //        val db = Room.inMemoryDatabaseBuilder(
@@ -64,7 +78,7 @@ class LiveDataInteractorTest {
         user.dni = "70668281"
 
         UserRepository.newInstance(mContext).save(user)
-        val allUsers = LivePagedListBuilder(UserRepository.newInstance(mContext).allUsersPaging, 50).build()
+        val allUsers = LivePagedListBuilder(userRepository.allUsersPaging, 50).build()
 
         val adapter = PagedUserAdapter()
 
@@ -75,15 +89,16 @@ class LiveDataInteractorTest {
 
         Mockito.`when`(listUserFragmentPresenter.adapterUsuarios).thenReturn(adapter)
 
-        interactor.validarRvUsuariosPopulado()
+        mInteractor.validarRvUsuariosPopulado()
         verify(listUserFragmentPresenter).rvUsuariosPopulado()
     }
 
     @Test
     fun validarCantidadUsuarios() {
-        Mockito.`when`(listUserFragmentPresenter.context).thenReturn(mContext)
 
-        val allUsers = LivePagedListBuilder(UserRepository.newInstance(mContext).allUsersPaging, 50).build()
+        mInteractor.attachPresenter(listUserFragmentPresenter)
+
+        val allUsers = LivePagedListBuilder(userRepository.allUsersPaging, 50).build()
 
         val adapter = PagedUserAdapter()
 
@@ -96,7 +111,7 @@ class LiveDataInteractorTest {
 
         Mockito.`when`(listUserFragmentPresenter.numUsers).thenReturn(adapter.itemCount)
 
-        interactor.validarCantidadPaginacion(1001)
+        mInteractor.validarCantidadPaginacion(1001)
 
         verify(listUserFragmentPresenter).cantidadValida()
     }

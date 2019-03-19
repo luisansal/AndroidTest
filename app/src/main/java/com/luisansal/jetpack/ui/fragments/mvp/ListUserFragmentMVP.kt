@@ -13,7 +13,6 @@ import com.luisansal.jetpack.ui.viewmodel.RoomViewModel
 interface ListUserFragmentMVP {
 
     interface View : LifecycleOwner {
-        var presenterForTest : ListUserFragmentPresenter
         fun initView(view: android.view.View)
         fun setupRoomViewModel()
         fun setupRv()
@@ -31,7 +30,6 @@ interface ListUserFragmentMVP {
         fun setupRv()
         fun populateAdapterRv(users: LiveData<PagedList<User>>)
         fun populateRoomViewModel(users: LiveData<PagedList<User>>)
-        val context : Context
         val adapterUsuarios : PagedUserAdapter
         fun validarCantidadPaginacion(numeroComparar : Int)
         fun cantidadValida()

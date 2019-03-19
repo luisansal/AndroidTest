@@ -7,7 +7,7 @@ import javax.inject.Inject
 class ListUserFragmentInteractor @Inject constructor(
                                                      private val userRepository: UserRepository) : ListUserFragmentMVP.Interactor {
 
-    lateinit var mPresenter : ListUserFragmentMVP.Presenter
+    private lateinit var mPresenter : ListUserFragmentMVP.Presenter
 
     override fun attachPresenter(presenter : ListUserFragmentMVP.Presenter){
         mPresenter = presenter

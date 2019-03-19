@@ -38,7 +38,7 @@ class MainActivityTest
     @Mock
     lateinit var listUserFragmentPresenter: ListUserFragmentMVP.Presenter
 //
-//    lateinit var interactor: ListUserFragmentInteractor
+//    lateinit var mInteractor: ListUserFragmentInteractor
 
     private lateinit var mDatabase: MyRoomDatabase
 
@@ -47,7 +47,7 @@ class MainActivityTest
     @Before
     fun setup() {
         mContext = InstrumentationRegistry.getContext()
-//        interactor = ListUserFragmentInteractor(listUserFragmentPresenter)
+//        mInteractor = ListUserFragmentInteractor(listUserFragmentPresenter)
         mDatabase = Room.inMemoryDatabaseBuilder(mContext,
                 MyRoomDatabase::class.java!!)
                 .allowMainThreadQueries()
@@ -87,8 +87,8 @@ class MainActivityTest
 
 //        Mockito.`when`(listUserFragmentPresenter.adapterUsuarios).thenReturn(adapter)
 //
-//        interactor.setupLivePaged()
-//        interactor.validarRvUsuariosPopulado()
+//        mInteractor.setupLivePaged()
+//        mInteractor.validarRvUsuariosPopulado()
 //
 //        Mockito.verify(listUserFragmentPresenter).rvUsuariosNoPopulado()
     }
@@ -107,8 +107,8 @@ class MainActivityTest
 //    fun cantidadAdecuadaDePaginacion() {
 //        Mockito.`when`(listUserFragmentPresenter.context).thenReturn(mContext)
 //
-//        interactor.setupLivePaged()
-//        interactor.validarCantidadPaginacion(50)
+//        mInteractor.setupLivePaged()
+//        mInteractor.validarCantidadPaginacion(50)
 //
 //        Mockito.verify(listUserFragmentPresenter).cantidadValida()
 //    }

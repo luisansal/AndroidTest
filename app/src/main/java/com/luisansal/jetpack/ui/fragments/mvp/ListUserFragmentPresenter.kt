@@ -21,11 +21,6 @@ class ListUserFragmentPresenter @Inject constructor(private val mView: ListUserF
     lateinit var mAdapter: PagedUserAdapter
     private var mNumUsers: Int = 0
 
-    override val context: Context
-        get() {
-            return (mView as ListUserFragment).context!!
-        }
-
     override fun validarRvUsuariosPopulado() {
         mInteractor.validarRvUsuariosPopulado()
     }
@@ -58,6 +53,8 @@ class ListUserFragmentPresenter @Inject constructor(private val mView: ListUserF
     override fun validarCantidadPaginacion(numeroComparar: Int) {
         mInteractor.validarCantidadPaginacion(numeroComparar)
     }
+
+
 
     override fun init() {
         mInteractor.attachPresenter(this)

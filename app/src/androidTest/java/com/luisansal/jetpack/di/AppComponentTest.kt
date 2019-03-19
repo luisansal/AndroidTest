@@ -1,6 +1,7 @@
 package com.luisansal.jetpack.di
 
 import android.app.Application
+import com.luisansal.jetpack.LiveDataInteractorTest
 import com.luisansal.jetpack.LiveDataPresenterTest
 import com.luisansal.jetpack.model.MyApplication
 import dagger.Component
@@ -24,5 +25,6 @@ interface AppComponentTest : AppComponent {
         override fun build(): AppComponentTest
     }
 
-    fun inject(injected: LiveDataPresenterTest)
+    fun inject(testToInject: LiveDataPresenterTest)
+    fun inject(testToInject: LiveDataInteractorTest)
 }

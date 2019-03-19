@@ -15,14 +15,10 @@ import com.luisansal.jetpack.ui.fragments.mvp.ListUserFragmentMVP
 import com.luisansal.jetpack.ui.fragments.mvp.ListUserFragmentPresenter
 import com.luisansal.jetpack.ui.viewmodel.RoomViewModel
 import dagger.android.support.AndroidSupportInjection
+import kotlinx.android.synthetic.main.fragment_list_user.view.*
 import javax.inject.Inject
 
 class ListUserFragment : Fragment(), ListUserFragmentMVP.View {
-    override var presenterForTest: ListUserFragmentPresenter
-        get() = mPresenter
-        set(value) {
-            mPresenter = value
-        }
 
     @Inject
     lateinit var mPresenter : ListUserFragmentPresenter
@@ -65,12 +61,12 @@ class ListUserFragment : Fragment(), ListUserFragmentMVP.View {
     }
 
     override fun initView(view: View) {
-        mRvUsers = view.findViewById(R.id.rvUsers)
-        btnNuevoUsuario = view.findViewById(R.id.btnNuevoUsuario)
+        mRvUsers = view.rvUsers
+        btnNuevoUsuario = view.btnNuevoUsuario
     }
 
     override fun onClickBtnNuevoUsuario() {
-        btnNuevoUsuario!!.setOnClickListener { view -> mCrudListener!!.onNew() }
+        btnNuevoUsuario.setOnClickListener { view -> mCrudListener!!.onNew() }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
