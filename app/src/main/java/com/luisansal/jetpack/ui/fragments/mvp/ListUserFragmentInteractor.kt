@@ -29,8 +29,6 @@ class ListUserFragmentInteractor @Inject constructor(
         }
     }
 
-    private var mNumUsers: Int = 0
-
     override fun setupLivePaged() {
         //        PagedList.Config config = new PagedList.Config.Builder()
         //                .setPageSize(100)
