@@ -20,8 +20,6 @@ interface AppComponentTest : AppComponent {
         @BindsInstance
         override fun application(application: MyApplication): Builder
 
-//        fun appModule(appModule: AppModule) : Builder
-
         override fun build(): AppComponentTest
     }
 
