@@ -1,6 +1,5 @@
 package com.luisansal.jetpack.model.repository
 
-import android.app.Application
 import android.content.Context
 
 import com.luisansal.jetpack.model.dao.UserDao
@@ -30,6 +29,10 @@ class UserRepository(mContext: Context) {
 
     fun save(user: User) {
         mUserDaoInstance!!.save(user)
+    }
+
+    fun saveAll(users: List<User>) {
+        mUserDaoInstance!!.saveAll(users)
     }
 
     fun getUserByDni(dni: String): LiveData<User> {

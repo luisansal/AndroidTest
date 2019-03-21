@@ -9,18 +9,16 @@ import com.luisansal.jetpack.model.dao.UserDao
 import com.luisansal.jetpack.model.dao.UserVisitsDao
 import com.luisansal.jetpack.model.dao.VisitDao
 import com.luisansal.jetpack.model.domain.User
-import com.luisansal.jetpack.model.domain.UserAndAllVists
 import com.luisansal.jetpack.model.domain.Visit
 import com.luisansal.jetpack.model.domain.converter.LatLngConverter
 
 import java.util.ArrayList
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.Observer
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
+import java.lang.Exception
 
 @Database(entities = [User::class, Visit::class], version = 4)
 @TypeConverters(LatLngConverter::class)
@@ -93,7 +91,12 @@ abstract class MyRoomDatabase : RoomDatabase() {
         private val sRoomDatabaseCallback = object : RoomDatabase.Callback() {
             override fun onOpen(db: SupportSQLiteDatabase) {
                 super.onOpen(db)
-                PopulateDbAsync(INSTANCE!!).execute()
+                try {
+                    PopulateDbAsync(INSTANCE!!).execute()
+                } catch (e: Exception){
+//                    e.printStackTrace()
+                }
+
             }
         }
     }

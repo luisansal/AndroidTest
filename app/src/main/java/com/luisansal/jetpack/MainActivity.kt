@@ -95,10 +95,6 @@ class MainActivity : AppCompatActivity(), ActionsViewPagerListener, MainActivity
         mViewPager = findViewById(R.id.pager)
         val presenter = MainActivityPresenter(this)
         presenter.init()
-        val users = userRepository.allUsers
-        users.observe(this, Observer {
-            Log.d("asdf",it.get(0).name)
-        })
     }
 
     override fun onNext() {
