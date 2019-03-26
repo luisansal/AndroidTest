@@ -8,7 +8,7 @@ import dagger.android.ContributesAndroidInjector
 @Module
 abstract class BuildersModule {
 
-    @ContributesAndroidInjector(modules = [ListUserFragmentViewModule::class, ListUserFragmentModule::class])
+    @ContributesAndroidInjector(modules = [ListUserFragmentBindModule::class])
     abstract fun bindListUserFragment(): ListUserFragment
 
 

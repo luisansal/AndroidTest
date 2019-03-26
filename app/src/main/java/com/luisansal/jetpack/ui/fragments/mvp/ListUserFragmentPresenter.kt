@@ -1,12 +1,10 @@
 package com.luisansal.jetpack.ui.fragments.mvp
 
-import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.paging.PagedList
 import com.luisansal.jetpack.model.domain.User
 import com.luisansal.jetpack.ui.adapters.PagedUserAdapter
-import com.luisansal.jetpack.ui.fragments.ListUserFragment
 import javax.inject.Inject
 
 class ListUserFragmentPresenter @Inject constructor(private val mView: ListUserFragmentMVP.View,
