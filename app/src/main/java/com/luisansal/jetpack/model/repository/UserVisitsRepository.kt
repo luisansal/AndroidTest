@@ -4,7 +4,7 @@ import android.app.Application
 
 import com.luisansal.jetpack.model.dao.UserVisitsDao
 import com.luisansal.jetpack.model.database.MyRoomDatabase
-import com.luisansal.jetpack.model.domain.UserAndAllVists
+import com.luisansal.jetpack.model.domain.UserAndVists
 
 import androidx.lifecycle.LiveData
 
@@ -17,11 +17,11 @@ class UserVisitsRepository(application: Application) {
         }
     }
 
-    fun getUserAllVisitsById(userId: Long?): LiveData<UserAndAllVists> {
+    fun getUserAllVisitsById(userId: Long?): LiveData<UserAndVists> {
         return mUserDaoInstance!!.findUserAllVisitsById(userId)
     }
 
-    fun getUserAllVisitsByDni(dni: String): LiveData<UserAndAllVists> {
+    fun getUserAllVisitsByDni(dni: String): LiveData<UserAndVists> {
         return mUserDaoInstance!!.findUserAllVisitsByDni(dni)
     }
 

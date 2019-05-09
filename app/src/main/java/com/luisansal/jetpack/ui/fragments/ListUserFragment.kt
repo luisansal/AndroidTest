@@ -10,7 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import com.luisansal.jetpack.R
-import com.luisansal.jetpack.interfaces.CrudListener
+import com.luisansal.jetpack.common.interfaces.CrudListener
 import com.luisansal.jetpack.ui.fragments.mvp.ListUserFragmentMVP
 import com.luisansal.jetpack.ui.fragments.mvp.ListUserFragmentPresenter
 import com.luisansal.jetpack.ui.viewmodel.RoomViewModel

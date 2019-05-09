@@ -8,8 +8,13 @@ import com.luisansal.jetpack.model.domain.User
 
 import androidx.lifecycle.LiveData
 import androidx.paging.DataSource
+import io.reactivex.Completable
+import io.reactivex.Single
+import javax.inject.Inject
 
-class UserRepository(mContext: Context) {
+class UserRepository @Inject constructor(mContext: Context) {
+
+    val db = MyRoomDatabase.getDatabase(mContext)
 
     val allUsers: LiveData<List<User>>
         get() = mUserDaoInstance!!.findAllUsers()
@@ -21,22 +26,37 @@ class UserRepository(mContext: Context) {
         get() = mUserDaoInstance!!.findAllUsersPaging()
 
     init {
-        val db = MyRoomDatabase.getDatabase(mContext)
+
         if (mUserDaoInstance == null) {
             mUserDaoInstance = db!!.userDao()
         }
     }
 
-    fun save(user: User) {
-        mUserDaoInstance!!.save(user)
+    fun save(user: User): Completable {
+        return Completable.create { subscriber ->
+
+            mUserDaoInstance!!.save(user)
+
+            subscriber.onComplete()
+        }
     }
 
     fun saveAll(users: List<User>) {
         mUserDaoInstance!!.saveAll(users)
     }
 
-    fun getUserByDni(dni: String): LiveData<User> {
-        return mUserDaoInstance!!.findOneByDni(dni)
+    fun deleteAll() {
+        mUserDaoInstance!!.deleteAll()
+    }
+
+    fun getUserByDni(dni: String): Single<User> {
+        return Single.create {
+            it.onSuccess(mUserDaoInstance!!.findOneByDni(dni))
+        }
+    }
+
+    fun closeConn() {
+        db?.close()
     }
 
     companion object {

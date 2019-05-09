@@ -1,5 +1,6 @@
 package com.luisansal.jetpack.ui.fragments
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
@@ -9,9 +10,9 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.luisansal.jetpack.R
-import com.luisansal.jetpack.interfaces.ActionsViewPagerListener
-import com.luisansal.jetpack.interfaces.CrudListener
-import com.luisansal.jetpack.interfaces.TitleListener
+import com.luisansal.jetpack.common.interfaces.ActionsViewPagerListener
+import com.luisansal.jetpack.common.interfaces.CrudListener
+import com.luisansal.jetpack.common.interfaces.TitleListener
 import com.luisansal.jetpack.model.domain.User
 import com.luisansal.jetpack.ui.fragments.mvp.RoomFragmentMVP
 import com.luisansal.jetpack.ui.fragments.mvp.RoomFragmentPresenter
@@ -20,17 +21,17 @@ import com.luisansal.jetpack.ui.viewmodel.RoomViewModel
 class RoomFragment : Fragment(), TitleListener, CrudListener<User>, RoomFragmentMVP.View {
 
     override val title = "Room Manager"
-    private var mViewModel: RoomViewModel? = null
+    private lateinit var mViewModel: RoomViewModel
     private var mActionsViewPagerListener: ActionsViewPagerListener? = null
 
     override var oBject: User?
-        get() = mViewModel?.user
-        set(oBject) {
-            mViewModel!!.user = oBject
+        get() = mViewModel.user
+        set(value) {
+            mViewModel.user = value
         }
 
-    override val objects: List<User>?
-        get() = null
+    override val objects: List<User>
+        get() = ArrayList()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -39,10 +40,8 @@ class RoomFragment : Fragment(), TitleListener, CrudListener<User>, RoomFragment
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        mViewModel = ViewModelProviders.of(this).get(RoomViewModel::class.java!!)
+        mViewModel = ViewModelProviders.of(this).get(RoomViewModel::class.java)
 
-        // Begin the transaction
-        mActionsViewPagerListener = activity as ActionsViewPagerListener?
         val presenter = RoomFragmentPresenter(this)
         presenter.init()
     }
@@ -60,10 +59,25 @@ class RoomFragment : Fragment(), TitleListener, CrudListener<User>, RoomFragment
     override fun onNew() {
         // Begin the transaction
         val ft = activity!!.supportFragmentManager.beginTransaction()
-        ft.replace(R.id.parent_fragment_container, NewUserFragment.newInstance(activity as ActionsViewPagerListener?, this), NewUserFragment.TAG)
+        ft.replace(R.id.parent_fragment_container, NewUserFragment.newInstance(this), NewUserFragment.TAG)
         ft.addToBackStack(NewUserFragment.TAG)
         ft.commit()
         mActionsViewPagerListener!!.fragmentName = NewUserFragment.TAG
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        try{
+            mActionsViewPagerListener = context as ActionsViewPagerListener
+        } catch (e : Exception) {
+            throw RuntimeException(context.toString()
+                    + " must implement " + mActionsViewPagerListener!!.javaClass.getSimpleName())
+        }
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        mActionsViewPagerListener = null
     }
 
     override fun onEdit() {
@@ -76,14 +90,17 @@ class RoomFragment : Fragment(), TitleListener, CrudListener<User>, RoomFragment
 
     override fun switchNavigation() {
         val ft = activity!!.supportFragmentManager.beginTransaction()
-        ft.replace(R.id.parent_fragment_container, NewUserFragment.newInstance(mActionsViewPagerListener, this), NewUserFragment.TAG)
+        ft.replace(R.id.parent_fragment_container, NewUserFragment.newInstance(this), NewUserFragment.TAG)
         ft.commit()
 
         if (getTagFragment() != null) {
-            if (getTagFragment() == NewUserFragment.TAG) {
-                onNew()
-            } else if (getTagFragment() == ListUserFragment.TAG) {
-                onList()
+            when (getTagFragment()) {
+                NewUserFragment.TAG -> {
+                    onNew()
+                }
+                else -> {
+                    onList()
+                }
             }
         }
     }

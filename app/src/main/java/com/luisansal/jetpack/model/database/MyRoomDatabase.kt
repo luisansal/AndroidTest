@@ -18,9 +18,11 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.luisansal.jetpack.model.dao.AuthorDao
+import com.luisansal.jetpack.model.domain.Author
 import java.lang.Exception
 
-@Database(entities = [User::class, Visit::class], version = 4)
+@Database(entities = [User::class, Visit::class, Author::class], version = 7)
 @TypeConverters(LatLngConverter::class)
 abstract class MyRoomDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao
@@ -28,6 +30,8 @@ abstract class MyRoomDatabase : RoomDatabase() {
     abstract fun visitDao(): VisitDao
 
     abstract fun userVisitsDao(): UserVisitsDao
+
+    abstract fun authorDao(): AuthorDao
 
     private class PopulateDbAsync (myRoomDatabase: MyRoomDatabase) : AsyncTask<Void, Void, Void>() {
 

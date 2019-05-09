@@ -31,7 +31,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.luisansal.jetpack.R
-import com.luisansal.jetpack.interfaces.TitleListener
+import com.luisansal.jetpack.common.interfaces.TitleListener
 import com.luisansal.jetpack.model.repository.UserVisitsRepository
 import com.luisansal.jetpack.ui.viewmodel.MapsViewModel
 

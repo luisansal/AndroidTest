@@ -1,6 +1,5 @@
 package com.luisansal.jetpack.di
 
-import com.luisansal.jetpack.MainActivity
 import com.luisansal.jetpack.model.MyApplication
 import dagger.Component
 import javax.inject.Singleton
@@ -17,14 +16,9 @@ interface AppComponent {
 
         @BindsInstance
         fun application(application: MyApplication): Builder
-
-//        fun appModule(appModule: AppModule) : Builder
-
         fun build(): AppComponent
 
     }
 
     fun inject(myApplication: MyApplication)
-
-//    fun inject(myActivity: MainActivity)
 }

@@ -3,10 +3,6 @@ package com.luisansal.jetpack.ui.fragments
 import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,27 +11,33 @@ import android.widget.EditText
 import android.widget.TextView
 
 import com.luisansal.jetpack.R
-import com.luisansal.jetpack.interfaces.ActionsViewPagerListener
-import com.luisansal.jetpack.interfaces.CrudListener
+import com.luisansal.jetpack.common.interfaces.ActionsViewPagerListener
+import com.luisansal.jetpack.common.interfaces.CrudListener
 import com.luisansal.jetpack.model.domain.User
-import com.luisansal.jetpack.model.repository.UserRepository
+import com.luisansal.jetpack.ui.fragments.mvp.NewUserFragmentMVP
+import com.luisansal.jetpack.ui.fragments.mvp.NewUserFragmentPresenter
+import dagger.android.support.AndroidSupportInjection
+import kotlinx.android.synthetic.main.fragment_new_user.view.*
+import javax.inject.Inject
 
-class NewUserFragment : Fragment() {
+class NewUserFragment : Fragment(), NewUserFragmentMVP.View {
 
-    var etDni: EditText? = null
-    var etNombre: EditText? = null
-    var etApellido: EditText? = null
+    @Inject
+    lateinit var mPresenter: NewUserFragmentPresenter
 
-    var btnSiguiente: Button? = null
-    var btnListado: Button? = null
+    lateinit var etDni: EditText
+    lateinit var etNombre: EditText
+    lateinit var etApellido: EditText
+    lateinit var btnSiguiente: Button
+    lateinit var btnListado: Button
+    lateinit var tvResultado: TextView
 
-    var tvResultado: TextView? = null
-
-    var mUserRepository: UserRepository? = null
+    var mActivityListener: ActionsViewPagerListener? = null
+    lateinit var mCrudListener: CrudListener<User>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mUserRepository = UserRepository(activity!!.application)
+        AndroidSupportInjection.inject(this)
         if (arguments != null) {
         }
     }
@@ -49,32 +51,36 @@ class NewUserFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        etNombre = view.findViewById(R.id.etNombre) as EditText
-        etApellido = view.findViewById(R.id.etApellido) as EditText
-        etDni = view.findViewById(R.id.etDni) as EditText
-        btnSiguiente = view.findViewById(R.id.btnSiguiente) as Button
-        btnListado = view.findViewById(R.id.btnListado) as Button
-        tvResultado = view.findViewById(R.id.tvResultado) as TextView
+        etNombre = view.etNombre
+        etApellido = view.etApellido
+        etDni = view.etDni
+        btnSiguiente = view.btnSiguiente
+        btnListado = view.btnListado
+        tvResultado = view.tvResultado
 
+        mPresenter.setView(this)
+        mPresenter.init()
+    }
 
+    override fun mostrarResultado(strResult: String) {
+        tvResultado.text = strResult
+    }
 
-        // TODO: Use the ViewModel
-        val user = mCrudListener!!.oBject
-        if (user != null) {
-            tvResultado!!.text = user.name + " " + user.lastName
-            etNombre!!.setText(user.name)
-            etApellido!!.setText(user.lastName)
-        }
-        onClickBtnSiguiente()
-        onClickBtnListado()
-        onTextDniChanged()
+    override fun loadViewModel(user: User) {
+        mostrarResultado(user.name + " " + user.lastName)
+        etNombre.setText(user.name)
+        etApellido.setText(user.lastName)
+    }
+
+    override fun nextPage() {
+        mActivityListener!!.onNext()
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context is ActionsViewPagerListener) {
-            mActivityListener = context
-        } else {
+        try{
+            mActivityListener = context as ActionsViewPagerListener
+        } catch (e : Exception) {
             throw RuntimeException(context.toString()
                     + " must implement " + mActivityListener!!.javaClass.getSimpleName())
         }
@@ -85,64 +91,29 @@ class NewUserFragment : Fragment() {
         mActivityListener = null
     }
 
-    private fun onClickBtnSiguiente() {
-        btnSiguiente!!.setOnClickListener {
-            val user = User()
-            user.name = etNombre!!.text.toString()
-            user.lastName = etApellido!!.text.toString()
-            user.dni = etDni!!.text.toString()
-            mCrudListener!!.oBject = user
-            tvResultado!!.text = user.name + " " + user.lastName
-
-            mUserRepository!!.save(user)
-            mActivityListener!!.onNext()
-        }
+    override fun onClickBtnSiguiente() {
+        mPresenter.onClickBtnSiguiente()
     }
 
-    private fun onTextDniChanged() {
-        etDni!!.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
-
-            }
-
-            override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
-                mUserRepository!!.getUserByDni(charSequence.toString()).observe(this@NewUserFragment, Observer { user ->
-                    if (user != null) {
-                        mCrudListener!!.oBject = user
-                        etDni!!.setText(user.dni)
-                        etNombre!!.setText(user.name)
-                        etApellido!!.setText(user.lastName)
-                        tvResultado!!.text = user.name + " " + user.lastName
-                    }
-                })
-            }
-
-            override fun afterTextChanged(editable: Editable) {
-
-            }
-        })
+    override fun onTextDniChanged() {
+        mPresenter.onTextDniChanged()
     }
 
-    fun onClickBtnListado() {
-        btnListado!!.setOnClickListener { mCrudListener!!.onList() }
+    override fun onClickBtnListado() {
+        btnListado.setOnClickListener { mCrudListener.onList() }
     }
 
     companion object {
 
-        var TAG = NewUserFragment::class.java!!.getName()
-
-        private var mActivityListener: ActionsViewPagerListener? = null
-        private var mCrudListener: CrudListener<User>? = null
-
+        var TAG = NewUserFragment::class.java.getName()
 
         // TODO: Rename and change types and number of parameters
-        fun newInstance(activityListener: ActionsViewPagerListener?, crudListener: CrudListener<User>): NewUserFragment {
+        fun newInstance(crudListener: CrudListener<User>): NewUserFragment {
             val fragment = NewUserFragment()
             val args = Bundle()
             fragment.arguments = args
-            mActivityListener = activityListener
-            mCrudListener = crudListener
+            fragment.mCrudListener = crudListener
             return fragment
         }
     }
-}// Required empty public constructor
+}

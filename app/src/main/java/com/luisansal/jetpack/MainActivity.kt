@@ -8,16 +8,14 @@ import android.util.Log
 import com.luisansal.jetpack.ui.adapters.MyPagerAdapter
 import com.luisansal.jetpack.ui.fragments.ListUserFragment
 import com.luisansal.jetpack.ui.fragments.NewUserFragment
-import com.luisansal.jetpack.interfaces.ActionsViewPagerListener
-import com.luisansal.jetpack.interfaces.TitleListener
+import com.luisansal.jetpack.common.interfaces.ActionsViewPagerListener
+import com.luisansal.jetpack.common.interfaces.TitleListener
 
 import java.util.ArrayList
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
-import androidx.lifecycle.Observer
 import androidx.viewpager.widget.ViewPager
-import com.luisansal.jetpack.model.MyApplication
 import com.luisansal.jetpack.model.repository.UserRepository
 import com.luisansal.jetpack.ui.MainActivityPresenter
 import com.luisansal.jetpack.ui.mvp.MainActivityMVP

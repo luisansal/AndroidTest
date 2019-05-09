@@ -33,5 +33,5 @@ interface UserDao {
 
 
     @Query("SELECT * from tbluser where dni = :dni")
-    fun findOneByDni(dni: String): LiveData<User>
+    fun findOneByDni(dni: String): User
 }
