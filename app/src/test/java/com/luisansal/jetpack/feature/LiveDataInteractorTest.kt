@@ -6,9 +6,8 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.LiveData
 import androidx.paging.LivePagedListBuilder
 import androidx.test.core.app.ApplicationProvider
+import com.luisansal.jetpack.dagger.base.BaseIntegrationTest
 import com.luisansal.jetpack.other.OneTimeObserver
-import com.luisansal.jetpack.di.*
-import com.luisansal.jetpack.model.MyApplication
 import com.luisansal.jetpack.model.domain.User
 import com.luisansal.jetpack.model.repository.UserRepository
 import com.luisansal.jetpack.ui.adapters.PagedUserAdapter
@@ -17,30 +16,15 @@ import com.luisansal.jetpack.ui.fragments.mvp.ListUserFragmentMVP
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.Mockito.verify
 import org.mockito.junit.MockitoJUnit
-import org.robolectric.RobolectricTestRunner
 import java.lang.Thread.sleep
 import java.util.ArrayList
 import javax.inject.Inject
 
-
-@RunWith(RobolectricTestRunner::class)
-class LiveDataInteractorTest : AppComponentTest {
-    override fun inject(testToInject: LiveDataPresenterTest) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun inject(testToInject: LiveDataInteractorTest) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun inject(myApplication: MyApplication) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+class LiveDataInteractorTest : BaseIntegrationTest() {
 
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
@@ -63,15 +47,9 @@ class LiveDataInteractorTest : AppComponentTest {
     @Before
     fun setup() {
         mContext = ApplicationProvider.getApplicationContext<Context>()
-
-        val app = mContext.applicationContext as MyApplication
-
-//        DaggerAppComponentTest2.builder().application(app)
-//                .build()
-//                .inject(this)
+        daggerComponent.inject(this)
 
         generateData()
-
     }
 
 

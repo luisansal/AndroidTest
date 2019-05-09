@@ -4,7 +4,7 @@ package com.luisansal.jetpack.dagger.base
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import com.luisansal.jetpack.AppTest
-import com.luisansal.jetpack.dagger.di.ApplicationComponentTest
+import com.luisansal.jetpack.dagger.di.AppComponentTest
 import org.junit.Before
 import org.junit.Ignore
 import org.junit.runner.RunWith
@@ -18,7 +18,7 @@ import org.robolectric.shadows.ShadowLooper
 @Config(application = AppTest::class, sdk = [27])
 abstract class BaseIntegrationTest {
 
-    lateinit var daggerComponent : ApplicationComponentTest
+    lateinit var daggerComponent : AppComponentTest
 
     @Before
     fun before() {
@@ -30,7 +30,7 @@ abstract class BaseIntegrationTest {
 
         //Construcción e Injección de Dagger en el Test
         //Para que de esta manera las anotaciones Inject puedan funcionar
-        daggerComponent = (app.mAppComponent!! as ApplicationComponentTest)
+        daggerComponent = (app.mAppComponent as AppComponentTest)
     }
 
     fun waitUiThread(delay: Long = 100) {

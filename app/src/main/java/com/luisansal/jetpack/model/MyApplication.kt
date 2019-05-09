@@ -27,7 +27,6 @@ open class MyApplication : Application(), HasActivityInjector, HasSupportFragmen
     override fun onCreate() {
         super.onCreate()
         mAppComponent = DaggerAppComponent.builder().application(this)
-//                .appModule(AppModule())
                 .build()
         mAppComponent.inject(this)
     }
@@ -39,8 +38,4 @@ open class MyApplication : Application(), HasActivityInjector, HasSupportFragmen
     override fun supportFragmentInjector(): AndroidInjector<Fragment> {
         return dispatchingAndroidFragmentInjector
     }
-
-//    fun getAppComponent(): AppComponent {
-//        return mAppComponent
-//    }
 }

@@ -6,7 +6,7 @@ import androidx.lifecycle.*
 import androidx.paging.LivePagedListBuilder
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.core.app.ApplicationProvider
-import com.luisansal.jetpack.model.MyApplication
+import com.luisansal.jetpack.dagger.base.BaseIntegrationTest
 import com.luisansal.jetpack.model.domain.User
 import com.luisansal.jetpack.model.repository.UserRepository
 import com.luisansal.jetpack.ui.fragments.mvp.ListUserFragmentMVP
@@ -16,21 +16,15 @@ import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.verify
 import org.mockito.junit.MockitoJUnit
-import org.robolectric.RobolectricTestRunner
-import org.robolectric.annotation.Config
 import org.robolectric.shadows.ShadowLooper
 import java.util.ArrayList
 
-
-@RunWith(RobolectricTestRunner::class)
-@Config(sdk = [27], application = MyApplication::class)
-class LiveDataPresenterTest {
+class LiveDataPresenterTest : BaseIntegrationTest(){
 
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
