@@ -19,7 +19,7 @@ class AuthorRepository @Inject constructor(mContext: Context) {
         }
     }
 
-    fun save(author: Author): Completable {
+    fun saveAuthor(author: Author): Completable {
         return Completable.create { subscriber ->
 
             mAuthorDao!!.save(author)
@@ -28,7 +28,7 @@ class AuthorRepository @Inject constructor(mContext: Context) {
         }
     }
 
-    fun getUserByDni(dni: String): Single<Author> {
+    fun getAuthorByDni(dni: String): Single<Author> {
         return Single.create {
             it.onSuccess(mAuthorDao!!.findOneByDni(dni))
         }

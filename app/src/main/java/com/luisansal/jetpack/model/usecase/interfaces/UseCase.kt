@@ -1,6 +1,6 @@
 package com.luisansal.jetpack.model.usecase.interfaces
 
-import dagger.internal.Preconditions
+import androidx.core.util.Preconditions
 import io.reactivex.*
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable

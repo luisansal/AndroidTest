@@ -1,4 +1,4 @@
-package com.luisansal.jetpack.feature
+package com.luisansal.jetpack.feature.otros
 
 import android.content.Context
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule

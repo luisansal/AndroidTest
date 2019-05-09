@@ -4,10 +4,11 @@ import com.luisansal.jetpack.di.AppComponent
 import com.luisansal.jetpack.di.AppModule
 import com.luisansal.jetpack.di.BuildersModule
 import com.luisansal.jetpack.di.FragmentBindModule
-import com.luisansal.jetpack.feature.GuardarAuthorPersistenceTest
-import com.luisansal.jetpack.feature.LiveDataInteractorTest
-import com.luisansal.jetpack.feature.LiveDataPresenterTest
+import com.luisansal.jetpack.feature.persistencia.author.GuardarAuthorPersistenceTest
+import com.luisansal.jetpack.feature.otros.LiveDataInteractorTest
+import com.luisansal.jetpack.feature.otros.LiveDataPresenterTest
 import com.luisansal.jetpack.feature.NewAuthorPresenterTest
+import com.luisansal.jetpack.feature.NewAuthorUseCaseTest
 import com.luisansal.jetpack.model.MyApplication
 import dagger.Component
 import javax.inject.Singleton
@@ -34,8 +35,9 @@ interface AppComponentTest : AppComponent {
 
     }
 
-    fun inject(testToInject: GuardarAuthorPersistenceTest)
-    fun inject(testToInject: NewAuthorPresenterTest)
     fun inject(testToInject: LiveDataPresenterTest)
     fun inject(testToInject: LiveDataInteractorTest)
+    fun inject(testToInject: GuardarAuthorPersistenceTest)
+    fun inject(testToInject: NewAuthorPresenterTest)
+    fun inject(testToInject: NewAuthorUseCaseTest)
 }

@@ -10,12 +10,12 @@ import javax.inject.Inject
 
 class AuthorUseCaseImpl @Inject constructor(private val authorRepository: AuthorRepository) : UseCase(), AuthorUseCase {
     override fun saveAuthor(author: Author, subscriber: BaseCompletableObserver) {
-        val completable = authorRepository.save(author)
-        execute(completable,subscriber)
+        val completable = authorRepository.saveAuthor(author)
+        execute(completable, subscriber)
     }
 
     override fun getAuthorByDni(dni: String, subscriber: BaseSingleObserver<Author>) {
-        val single = authorRepository.getUserByDni(dni)
-        execute(single,subscriber)
+        val single = authorRepository.getAuthorByDni(dni)
+        execute(single, subscriber)
     }
 }
