@@ -1,4 +1,4 @@
-package com.luisansal.jetpack.ui.fragments.mvp
+package com.luisansal.jetpack.ui.mvp
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer

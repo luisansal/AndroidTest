@@ -11,8 +11,8 @@ import android.view.ViewGroup
 import android.widget.Button
 import com.luisansal.jetpack.R
 import com.luisansal.jetpack.common.interfaces.CrudListener
-import com.luisansal.jetpack.ui.fragments.mvp.ListUserFragmentMVP
-import com.luisansal.jetpack.ui.fragments.mvp.ListUserFragmentPresenter
+import com.luisansal.jetpack.ui.mvp.ListUserFragmentMVP
+import com.luisansal.jetpack.ui.mvp.ListUserFragmentPresenter
 import com.luisansal.jetpack.ui.viewmodel.RoomViewModel
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_list_user.view.*

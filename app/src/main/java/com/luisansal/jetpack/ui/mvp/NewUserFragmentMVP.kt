@@ -1,4 +1,4 @@
-package com.luisansal.jetpack.ui.fragments.mvp
+package com.luisansal.jetpack.ui.mvp
 
 import com.luisansal.jetpack.model.domain.User
 
@@ -16,7 +16,7 @@ interface NewUserFragmentMVP {
         fun setView(view: View)
         fun init()
         fun onClickBtnSiguiente()
-        fun onTextDniChanged()
+        fun onTextDniChanged(texto : String)
         fun saveUser()
         fun goToNextPage()
     }

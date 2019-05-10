@@ -1,4 +1,4 @@
-package com.luisansal.jetpack.ui.fragments.mvp
+package com.luisansal.jetpack.ui.mvp
 
 import android.text.Editable
 import android.text.TextWatcher
@@ -14,7 +14,7 @@ class NewUserFragmentPresenter @Inject constructor(private val userUseCase: User
     private lateinit var mView: NewUserFragment
 
     override fun onClickBtnSiguiente() {
-        mView.btnSiguiente.setOnClickListener {
+
             val user = User()
             user.name = mView.etNombre.text.toString()
             user.lastName = mView.etApellido.text.toString()
@@ -25,23 +25,11 @@ class NewUserFragmentPresenter @Inject constructor(private val userUseCase: User
             mView.mostrarResultado(user.name + " " + user.lastName)
 
             userUseCase.saveUser(user, SaveUserSubscriber())
-        }
+
     }
 
-    override fun onTextDniChanged() {
-        mView.etDni.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
-
-            }
-
-            override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
-                userUseCase.getUserByDni(charSequence.toString(), TextChangedSubscriber())
-            }
-
-            override fun afterTextChanged(editable: Editable) {
-
-            }
-        })
+    override fun onTextDniChanged(texto : String) {
+        userUseCase.getUserByDni(texto, TextChangedSubscriber())
     }
 
     override fun init() {

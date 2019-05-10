@@ -7,14 +7,10 @@ import androidx.room.Index
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "tblauthor", indices = [Index(value = ["dni"], unique = true)])
-class Author {
+data class Author (var dni: String?,var name: String?,var lastName: String?) {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     var id: Long? = null
 
-    var dni: String? = null
-
-    var name: String? = null
-    var lastName: String? = null
 }

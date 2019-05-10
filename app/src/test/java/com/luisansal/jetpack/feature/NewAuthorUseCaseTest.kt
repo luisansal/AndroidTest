@@ -25,13 +25,10 @@ class NewAuthorUseCaseTest : BaseIntegrationTest() {
         val syncObject = Object()
 
 
-        val author = Author()
-        author.dni = "234234"
-        author.name = "luis"
-        author.lastName = "sanchez"
+        val author = Author("234234","luis","sanchez")
 
         var ok = false
-        authorUseCaseImpl.saveAuthor(author, object : BaseCompletableObserver() {
+        authorUseCaseImpl.guardarAuthor(author, object : BaseCompletableObserver() {
             override fun onComplete() {
                 ok = true
 

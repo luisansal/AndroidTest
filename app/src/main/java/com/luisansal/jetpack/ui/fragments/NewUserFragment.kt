@@ -2,6 +2,8 @@ package com.luisansal.jetpack.ui.fragments
 
 import android.content.Context
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,8 +16,8 @@ import com.luisansal.jetpack.R
 import com.luisansal.jetpack.common.interfaces.ActionsViewPagerListener
 import com.luisansal.jetpack.common.interfaces.CrudListener
 import com.luisansal.jetpack.model.domain.User
-import com.luisansal.jetpack.ui.fragments.mvp.NewUserFragmentMVP
-import com.luisansal.jetpack.ui.fragments.mvp.NewUserFragmentPresenter
+import com.luisansal.jetpack.ui.mvp.NewUserFragmentMVP
+import com.luisansal.jetpack.ui.mvp.NewUserFragmentPresenter
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_new_user.view.*
 import javax.inject.Inject
@@ -92,11 +94,26 @@ class NewUserFragment : Fragment(), NewUserFragmentMVP.View {
     }
 
     override fun onClickBtnSiguiente() {
-        mPresenter.onClickBtnSiguiente()
+        btnSiguiente.setOnClickListener {
+            mPresenter.onClickBtnSiguiente()
+        }
     }
 
     override fun onTextDniChanged() {
-        mPresenter.onTextDniChanged()
+        etDni.addTextChangedListener(object: TextWatcher{
+            override fun afterTextChanged(s: Editable?) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                mPresenter.onTextDniChanged(s.toString())
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+        })
     }
 
     override fun onClickBtnListado() {

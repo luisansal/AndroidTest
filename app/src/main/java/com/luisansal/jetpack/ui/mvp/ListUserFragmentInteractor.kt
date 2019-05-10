@@ -1,4 +1,4 @@
-package com.luisansal.jetpack.ui.fragments.mvp
+package com.luisansal.jetpack.ui.mvp
 
 import androidx.paging.LivePagedListBuilder
 import com.luisansal.jetpack.model.repository.UserRepository

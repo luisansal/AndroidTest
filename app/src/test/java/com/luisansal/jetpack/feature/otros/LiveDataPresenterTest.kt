@@ -9,8 +9,8 @@ import androidx.test.core.app.ApplicationProvider
 import com.luisansal.jetpack.dagger.base.BaseIntegrationTest
 import com.luisansal.jetpack.model.domain.User
 import com.luisansal.jetpack.model.repository.UserRepository
-import com.luisansal.jetpack.ui.fragments.mvp.ListUserFragmentMVP
-import com.luisansal.jetpack.ui.fragments.mvp.ListUserFragmentPresenter
+import com.luisansal.jetpack.ui.mvp.ListUserFragmentMVP
+import com.luisansal.jetpack.ui.mvp.ListUserFragmentPresenter
 import com.luisansal.jetpack.ui.viewmodel.RoomViewModel
 import org.junit.Assert
 import org.junit.Before

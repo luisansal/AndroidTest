@@ -14,8 +14,8 @@ import com.luisansal.jetpack.common.interfaces.ActionsViewPagerListener
 import com.luisansal.jetpack.common.interfaces.CrudListener
 import com.luisansal.jetpack.common.interfaces.TitleListener
 import com.luisansal.jetpack.model.domain.User
-import com.luisansal.jetpack.ui.fragments.mvp.RoomFragmentMVP
-import com.luisansal.jetpack.ui.fragments.mvp.RoomFragmentPresenter
+import com.luisansal.jetpack.ui.mvp.RoomFragmentMVP
+import com.luisansal.jetpack.ui.mvp.RoomFragmentPresenter
 import com.luisansal.jetpack.ui.viewmodel.RoomViewModel
 
 class RoomFragment : Fragment(), TitleListener, CrudListener<User>, RoomFragmentMVP.View {
@@ -65,6 +65,15 @@ class RoomFragment : Fragment(), TitleListener, CrudListener<User>, RoomFragment
         mActionsViewPagerListener!!.fragmentName = NewUserFragment.TAG
     }
 
+    fun onNewAuthor() {
+        // Begin the transaction
+        val ft = activity!!.supportFragmentManager.beginTransaction()
+        ft.replace(R.id.parent_fragment_container, NewAuthorFragment.newInstance(this), NewUserFragment.TAG)
+        ft.addToBackStack(NewUserFragment.TAG)
+        ft.commit()
+        mActionsViewPagerListener!!.fragmentName = NewAuthorFragment.TAG
+    }
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         try{
@@ -90,13 +99,13 @@ class RoomFragment : Fragment(), TitleListener, CrudListener<User>, RoomFragment
 
     override fun switchNavigation() {
         val ft = activity!!.supportFragmentManager.beginTransaction()
-        ft.replace(R.id.parent_fragment_container, NewUserFragment.newInstance(this), NewUserFragment.TAG)
+        ft.replace(R.id.parent_fragment_container, NewAuthorFragment.newInstance(this), NewAuthorFragment.TAG)
         ft.commit()
 
         if (getTagFragment() != null) {
             when (getTagFragment()) {
-                NewUserFragment.TAG -> {
-                    onNew()
+                NewAuthorFragment.TAG -> {
+                    onNewAuthor()
                 }
                 else -> {
                     onList()

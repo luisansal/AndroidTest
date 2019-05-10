@@ -1,6 +1,6 @@
 package com.luisansal.jetpack.other
 
-import com.luisansal.jetpack.ui.fragments.mvp.ListUserFragmentMVP
+import com.luisansal.jetpack.ui.mvp.ListUserFragmentMVP
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith

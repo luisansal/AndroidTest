@@ -9,7 +9,7 @@ import com.luisansal.jetpack.model.usecase.interfaces.UseCase
 import javax.inject.Inject
 
 class AuthorUseCaseImpl @Inject constructor(private val authorRepository: AuthorRepository) : UseCase(), AuthorUseCase {
-    override fun saveAuthor(author: Author, subscriber: BaseCompletableObserver) {
+    override fun guardarAuthor(author: Author, subscriber: BaseCompletableObserver) {
         val completable = authorRepository.saveAuthor(author)
         execute(completable, subscriber)
     }

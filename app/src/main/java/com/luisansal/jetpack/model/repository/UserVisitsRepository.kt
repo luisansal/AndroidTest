@@ -33,8 +33,8 @@ class UserVisitsRepository(application: Application) {
         }
     }
 
-    //    public void saveAuthor(UserAndAllVists user) {
-    //        mUserDaoInstance.saveAuthor(user);
+    //    public void guardarAuthor(UserAndAllVists user) {
+    //        mUserDaoInstance.guardarAuthor(user);
     //    }
 
 }

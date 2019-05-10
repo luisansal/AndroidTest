@@ -11,8 +11,8 @@ import com.luisansal.jetpack.other.OneTimeObserver
 import com.luisansal.jetpack.model.domain.User
 import com.luisansal.jetpack.model.repository.UserRepository
 import com.luisansal.jetpack.ui.adapters.PagedUserAdapter
-import com.luisansal.jetpack.ui.fragments.mvp.ListUserFragmentInteractor
-import com.luisansal.jetpack.ui.fragments.mvp.ListUserFragmentMVP
+import com.luisansal.jetpack.ui.mvp.ListUserFragmentInteractor
+import com.luisansal.jetpack.ui.mvp.ListUserFragmentMVP
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
