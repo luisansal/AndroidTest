@@ -99,6 +99,23 @@ class RoomFragment : Fragment(), TitleListener, CrudListener<User>, RoomFragment
 
     override fun switchNavigation() {
         val ft = activity!!.supportFragmentManager.beginTransaction()
+        ft.replace(R.id.parent_fragment_container, NewUserFragment.newInstance(this), NewUserFragment.TAG)
+        ft.commit()
+
+        if (getTagFragment() != null) {
+            when (getTagFragment()) {
+                NewUserFragment.TAG -> {
+                    onNewAuthor()
+                }
+                else -> {
+                    onList()
+                }
+            }
+        }
+    }
+
+    override fun switchNavigationAuthor() {
+        val ft = activity!!.supportFragmentManager.beginTransaction()
         ft.replace(R.id.parent_fragment_container, NewAuthorFragment.newInstance(this), NewAuthorFragment.TAG)
         ft.commit()
 

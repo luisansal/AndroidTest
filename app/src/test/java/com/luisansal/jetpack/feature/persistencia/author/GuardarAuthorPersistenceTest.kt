@@ -20,10 +20,7 @@ class GuardarAuthorPersistenceTest : BaseIntegrationTest() {
 
     @Test
     fun guardarAuthor() {
-        val author = Author()
-        author.dni = "234234"
-        author.name = "luis"
-        author.lastName = "sanchez"
+        val author = Author("234234","luis","sanchez")
 
         val completableTest = authorRepository.saveAuthor(author).test()
         completableTest.awaitTerminalEvent()

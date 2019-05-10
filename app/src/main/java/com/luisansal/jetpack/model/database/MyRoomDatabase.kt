@@ -22,7 +22,7 @@ import com.luisansal.jetpack.model.dao.AuthorDao
 import com.luisansal.jetpack.model.domain.Author
 import java.lang.Exception
 
-@Database(entities = [User::class, Visit::class, Author::class], version = 7)
+@Database(entities = [User::class, Visit::class, Author::class], version = 8)
 @TypeConverters(LatLngConverter::class)
 abstract class MyRoomDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao
@@ -46,10 +46,8 @@ abstract class MyRoomDatabase : RoomDatabase() {
         override fun doInBackground(vararg voids: Void): Void? {
             userDao.deleteAll()
 
-            var user = User()
-            user.name = "Juan"
-            user.lastName = "Alvarez"
-            user.dni = "05159410"
+            var user = User("05159410","Juan","Alvarez")
+
             val lastUserId = userDao.save(user)
 
             val visit = Visit(LatLng(-35.0, 151.0), lastUserId)
@@ -58,10 +56,7 @@ abstract class MyRoomDatabase : RoomDatabase() {
 
             val users = ArrayList<User>()
             for (i in 0..999) {
-                user = User()
-                user.name = "User" + (i + 1)
-                user.lastName = "Apell" + (i + 1)
-                user.dni = "dni" + (i + 1)
+                user = User("User" + (i + 1),"Apell" + (i + 1),"dni" + (i + 1))
                 users.add(user)
             }
             userDao.saveAll(users)

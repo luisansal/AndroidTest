@@ -37,7 +37,6 @@ class NewAuthorPresenterTest : BaseIntegrationTest() {
         `when`(view.author).thenReturn(author)
 
         presenter.guardarAuthor()
-//        authorUseCase.verificarCamposObligatorios()
         verify(view).notificarGuardado()
     }
 

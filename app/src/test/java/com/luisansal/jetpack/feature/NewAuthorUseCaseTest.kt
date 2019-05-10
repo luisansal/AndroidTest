@@ -21,10 +21,7 @@ class NewAuthorUseCaseTest : BaseIntegrationTest() {
     }
 
     @Test
-    fun guardarAuthor() {
-        val syncObject = Object()
-
-
+    fun `guardar author`() {
         val author = Author("234234","luis","sanchez")
 
         var ok = false
@@ -44,7 +41,7 @@ class NewAuthorUseCaseTest : BaseIntegrationTest() {
 
     @Test
     fun encontrarAuthor() {
-        guardarAuthor()
+        `guardar author`()
 
         var ok = false
         authorUseCaseImpl.getAuthorByDni("234234", object : BaseSingleObserver<Author>() {

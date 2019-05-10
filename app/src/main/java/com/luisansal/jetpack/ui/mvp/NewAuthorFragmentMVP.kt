@@ -8,7 +8,7 @@ class NewAuthorFragmentMVP {
         fun onClickBtnGuardar()
         fun onClickBtnBuscar()
         fun notificarGuardado()
-
+        fun cargarCamposEnVista()
         var author : Author?
     }
 

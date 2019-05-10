@@ -1,7 +1,5 @@
 package com.luisansal.jetpack.ui.mvp
 
-import android.text.Editable
-import android.text.TextWatcher
 import com.luisansal.jetpack.model.domain.User
 import com.luisansal.jetpack.common.observer.BaseCompletableObserver
 import com.luisansal.jetpack.common.observer.BaseSingleObserver
@@ -11,24 +9,15 @@ import javax.inject.Inject
 
 class NewUserFragmentPresenter @Inject constructor(private val userUseCase: UserUseCase) : NewUserFragmentMVP.Presenter {
 
-    private lateinit var mView: NewUserFragment
+    private lateinit var mView: NewUserFragmentMVP.View
 
-    override fun onClickBtnSiguiente() {
+    override fun onClickBtnSiguiente(user: User) {
+        mView.crudListener?.oBject = user
 
-            val user = User()
-            user.name = mView.etNombre.text.toString()
-            user.lastName = mView.etApellido.text.toString()
-            user.dni = mView.etDni.text.toString()
-
-            mView.mCrudListener.oBject = user
-
-            mView.mostrarResultado(user.name + " " + user.lastName)
-
-            userUseCase.saveUser(user, SaveUserSubscriber())
-
+        mView.mostrarResultado(user.name + " " + user.lastName)
     }
 
-    override fun onTextDniChanged(texto : String) {
+    override fun onTextDniChanged(texto: String) {
         userUseCase.getUserByDni(texto, TextChangedSubscriber())
     }
 
@@ -36,7 +25,7 @@ class NewUserFragmentPresenter @Inject constructor(private val userUseCase: User
         mView.onClickBtnListado()
         mView.onClickBtnSiguiente()
         mView.onTextDniChanged()
-        mView.mCrudListener.oBject?.let { mView.loadViewModel(it) }
+        mView.crudListener?.oBject?.let { mView.loadViewModel(it) }
     }
 
 
@@ -46,7 +35,7 @@ class NewUserFragmentPresenter @Inject constructor(private val userUseCase: User
 
 
     override fun saveUser() {
-
+        mView.crudListener?.oBject?.let { userUseCase.saveUser(it, SaveUserSubscriber()) }
     }
 
     override fun goToNextPage() {
@@ -55,7 +44,7 @@ class NewUserFragmentPresenter @Inject constructor(private val userUseCase: User
 
     private inner class TextChangedSubscriber : BaseSingleObserver<User>() {
         override fun onSuccess(t: User) {
-            mView.mCrudListener.oBject = t
+            mView.crudListener?.oBject = t
             mView.loadViewModel(t)
         }
     }

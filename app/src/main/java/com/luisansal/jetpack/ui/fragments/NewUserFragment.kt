@@ -19,20 +19,17 @@ import com.luisansal.jetpack.model.domain.User
 import com.luisansal.jetpack.ui.mvp.NewUserFragmentMVP
 import com.luisansal.jetpack.ui.mvp.NewUserFragmentPresenter
 import dagger.android.support.AndroidSupportInjection
+import kotlinx.android.synthetic.main.fragment_new_user.*
 import kotlinx.android.synthetic.main.fragment_new_user.view.*
 import javax.inject.Inject
 
 class NewUserFragment : Fragment(), NewUserFragmentMVP.View {
+    override var user: User? = null
+
+    override var crudListener: CrudListener<User> ? = null
 
     @Inject
     lateinit var mPresenter: NewUserFragmentPresenter
-
-    lateinit var etDni: EditText
-    lateinit var etNombre: EditText
-    lateinit var etApellido: EditText
-    lateinit var btnSiguiente: Button
-    lateinit var btnListado: Button
-    lateinit var tvResultado: TextView
 
     var mActivityListener: ActionsViewPagerListener? = null
     lateinit var mCrudListener: CrudListener<User>
@@ -40,8 +37,6 @@ class NewUserFragment : Fragment(), NewUserFragmentMVP.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AndroidSupportInjection.inject(this)
-        if (arguments != null) {
-        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -53,12 +48,6 @@ class NewUserFragment : Fragment(), NewUserFragmentMVP.View {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        etNombre = view.etNombre
-        etApellido = view.etApellido
-        etDni = view.etDni
-        btnSiguiente = view.btnSiguiente
-        btnListado = view.btnListado
-        tvResultado = view.tvResultado
 
         mPresenter.setView(this)
         mPresenter.init()
@@ -95,22 +84,23 @@ class NewUserFragment : Fragment(), NewUserFragmentMVP.View {
 
     override fun onClickBtnSiguiente() {
         btnSiguiente.setOnClickListener {
-            mPresenter.onClickBtnSiguiente()
+            user = User(etDni.text.toString(),etNombre.text.toString(),etApellido.text.toString())
+            mPresenter.onClickBtnSiguiente(user!!)
         }
     }
 
     override fun onTextDniChanged() {
         etDni.addTextChangedListener(object: TextWatcher{
             override fun afterTextChanged(s: Editable?) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                mPresenter.onTextDniChanged(s.toString())
+
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                mPresenter.onTextDniChanged(s.toString())
             }
 
         })
