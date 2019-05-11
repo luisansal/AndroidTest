@@ -9,6 +9,16 @@ import com.luisansal.jetpack.model.usecase.interfaces.UseCase
 import javax.inject.Inject
 
 class AuthorUseCaseImpl @Inject constructor(private val authorRepository: AuthorRepository) : UseCase(), AuthorUseCase {
+    override fun comprobarCamposObligatorios(author: Author): Boolean {
+        if (author.dni.isEmpty())
+            return false
+        if (author.nombre.isEmpty())
+            return false
+        if (author.apellido.isEmpty())
+            return false
+        return true
+    }
+
     override fun guardarAuthor(author: Author, subscriber: BaseCompletableObserver) {
         val completable = authorRepository.saveAuthor(author)
         execute(completable, subscriber)

@@ -7,4 +7,5 @@ import com.luisansal.jetpack.common.observer.BaseSingleObserver
 interface AuthorUseCase {
     fun guardarAuthor(author: Author, subscriber : BaseCompletableObserver)
     fun getAuthorByDni(dni: String,subscriber : BaseSingleObserver<Author>)
+    fun comprobarCamposObligatorios(author: Author) : Boolean
 }

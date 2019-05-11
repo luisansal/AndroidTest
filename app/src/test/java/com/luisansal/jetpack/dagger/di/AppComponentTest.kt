@@ -4,11 +4,11 @@ import com.luisansal.jetpack.di.AppComponent
 import com.luisansal.jetpack.di.AppModule
 import com.luisansal.jetpack.di.BuildersModule
 import com.luisansal.jetpack.di.FragmentBindModule
-import com.luisansal.jetpack.feature.persistencia.author.GuardarAuthorPersistenceTest
-import com.luisansal.jetpack.feature.otros.LiveDataInteractorTest
-import com.luisansal.jetpack.feature.otros.LiveDataPresenterTest
-import com.luisansal.jetpack.feature.NewAuthorPresenterTest
-import com.luisansal.jetpack.feature.NewAuthorUseCaseTest
+import com.luisansal.jetpack.feature.nuevoauthor.persistencia.GuardarAuthorPersistenceTest
+import com.luisansal.jetpack.feature.listadopaginadouser.LiveDataInteractorTest
+import com.luisansal.jetpack.feature.listadopaginadouser.LiveDataPresenterTest
+import com.luisansal.jetpack.feature.nuevoauthor.NewAuthorPresenterTest
+import com.luisansal.jetpack.feature.nuevoauthor.NewAuthorUseCaseTest
 import com.luisansal.jetpack.model.MyApplication
 import dagger.Component
 import javax.inject.Singleton

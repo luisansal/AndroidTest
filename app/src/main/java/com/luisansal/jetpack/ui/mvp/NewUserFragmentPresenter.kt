@@ -14,7 +14,7 @@ class NewUserFragmentPresenter @Inject constructor(private val userUseCase: User
     override fun onClickBtnSiguiente(user: User) {
         mView.crudListener?.oBject = user
 
-        mView.mostrarResultado(user.name + " " + user.lastName)
+        mView.mostrarResultado(user.nombre + " " + user.apellido)
     }
 
     override fun onTextDniChanged(texto: String) {

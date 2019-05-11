@@ -9,6 +9,5 @@ interface RoomFragmentMVP{
 
     interface Presenter{
         fun init()
-        fun switchNavigation()
     }
 }

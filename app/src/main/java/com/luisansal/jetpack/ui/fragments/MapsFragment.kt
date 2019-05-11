@@ -109,7 +109,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback, TitleListener, GoogleMap.On
 
         UserVisitsRepository.newInstance(activity!!.application).getUserAllVisitsByDni("05159410").observe(this, Observer { userAndAllVists ->
             for (visit in userAndAllVists.visits) {
-                mGoogleMap!!.addMarker(MarkerOptions().position(visit.location).title("Marker user: " + userAndAllVists.user.name!!))
+                mGoogleMap!!.addMarker(MarkerOptions().position(visit.location).title("Marker user: " + userAndAllVists.user.nombre!!))
                 mGoogleMap!!.moveCamera(CameraUpdateFactory.newLatLng(visit.location))
             }
         })

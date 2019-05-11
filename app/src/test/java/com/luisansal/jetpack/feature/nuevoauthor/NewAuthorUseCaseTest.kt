@@ -1,9 +1,10 @@
-package com.luisansal.jetpack.feature
+package com.luisansal.jetpack.feature.nuevoauthor
 
 import com.luisansal.jetpack.common.observer.BaseCompletableObserver
 import com.luisansal.jetpack.common.observer.BaseSingleObserver
 import com.luisansal.jetpack.dagger.base.BaseIntegrationTest
 import com.luisansal.jetpack.model.domain.Author
+import com.luisansal.jetpack.model.domain.User
 import com.luisansal.jetpack.model.usecase.AuthorUseCaseImpl
 import org.junit.Assert
 import org.junit.Before
@@ -40,7 +41,7 @@ class NewAuthorUseCaseTest : BaseIntegrationTest() {
     }
 
     @Test
-    fun encontrarAuthor() {
+    fun `encontrar author`() {
         `guardar author`()
 
         var ok = false
@@ -56,4 +57,10 @@ class NewAuthorUseCaseTest : BaseIntegrationTest() {
         Assert.assertTrue(ok)
     }
 
+    @Test
+    fun `verificar campos obligatorios`(){
+        val author = Author("jj","jn","Lopez")
+
+        Assert.assertTrue(authorUseCaseImpl.comprobarCamposObligatorios(author))
+    }
 }

@@ -68,7 +68,7 @@ class RoomFragment : Fragment(), TitleListener, CrudListener<User>, RoomFragment
     fun onNewAuthor() {
         // Begin the transaction
         val ft = activity!!.supportFragmentManager.beginTransaction()
-        ft.replace(R.id.parent_fragment_container, NewAuthorFragment.newInstance(this), NewUserFragment.TAG)
+        ft.replace(R.id.parent_fragment_container, NewAuthorFragment.newInstance(), NewUserFragment.TAG)
         ft.addToBackStack(NewUserFragment.TAG)
         ft.commit()
         mActionsViewPagerListener!!.fragmentName = NewAuthorFragment.TAG
@@ -116,7 +116,7 @@ class RoomFragment : Fragment(), TitleListener, CrudListener<User>, RoomFragment
 
     override fun switchNavigationAuthor() {
         val ft = activity!!.supportFragmentManager.beginTransaction()
-        ft.replace(R.id.parent_fragment_container, NewAuthorFragment.newInstance(this), NewAuthorFragment.TAG)
+        ft.replace(R.id.parent_fragment_container, NewAuthorFragment.newInstance(), NewAuthorFragment.TAG)
         ft.commit()
 
         if (getTagFragment() != null) {

@@ -1,4 +1,4 @@
-package com.luisansal.jetpack.feature.persistencia.author
+package com.luisansal.jetpack.feature.nuevoauthor.persistencia
 
 import com.luisansal.jetpack.dagger.base.BaseIntegrationTest
 import com.luisansal.jetpack.model.domain.Author

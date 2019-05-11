@@ -43,8 +43,8 @@ class PagedUserAdapter : PagedListAdapter<User, PagedUserAdapter.PagingUserViewH
         }
 
         fun bindTo(user: User) {
-            tvName.text = user.name
-            tvLastName.text = user.lastName
+            tvName.text = user.nombre
+            tvLastName.text = user.apellido
         }
 
         fun clear() {

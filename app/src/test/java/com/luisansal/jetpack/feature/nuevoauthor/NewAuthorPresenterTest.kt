@@ -1,8 +1,7 @@
-package com.luisansal.jetpack.feature
+package com.luisansal.jetpack.feature.nuevoauthor
 
 import com.luisansal.jetpack.dagger.base.BaseIntegrationTest
 import com.luisansal.jetpack.model.domain.Author
-import com.luisansal.jetpack.model.usecase.interfaces.AuthorUseCase
 import com.luisansal.jetpack.ui.mvp.NewAuthorFragmentMVP
 import com.luisansal.jetpack.ui.mvp.author.NewAuthorFragmentPresenter
 import org.junit.Before
@@ -31,24 +30,37 @@ class NewAuthorPresenterTest : BaseIntegrationTest() {
     }
 
     @Test
-    fun guardarAuthor(){
+    fun `guardar author`(){
 
         val author = Author("0001","jorge","espinoza")
         `when`(view.author).thenReturn(author)
 
+        presenter.setView(view)
         presenter.guardarAuthor()
         verify(view).notificarGuardado()
     }
 
     @Test
-    fun `verificar campos obligatorios`(){
-        val author = Author("0001","jorge","espinoza")
-        `when`(view.author).thenReturn(author)
+    fun `encontrar author`(){
+        `guardar author`()
 
-        presenter.verificarCamposObligatorios()
+        `when`(view.dni).thenReturn("0001")
 
-        verify(view).notificarGuardado()
+        presenter.setView(view)
+        presenter.buscarAuthor()
+
+        verify(view).authorEncontrado()
     }
 
+    @Test
+    fun `verificar limpiar campos`(){
 
+        val author = Author("","","")
+        `when`(view.author).thenReturn(author)
+
+        presenter.setView(view)
+        presenter.limpiarCampos()
+
+        verify(view).camposVacios()
+    }
 }

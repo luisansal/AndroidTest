@@ -8,9 +8,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
 
 import com.luisansal.jetpack.R
 import com.luisansal.jetpack.common.interfaces.ActionsViewPagerListener
@@ -20,7 +17,6 @@ import com.luisansal.jetpack.ui.mvp.NewUserFragmentMVP
 import com.luisansal.jetpack.ui.mvp.NewUserFragmentPresenter
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_new_user.*
-import kotlinx.android.synthetic.main.fragment_new_user.view.*
 import javax.inject.Inject
 
 class NewUserFragment : Fragment(), NewUserFragmentMVP.View {
@@ -58,9 +54,9 @@ class NewUserFragment : Fragment(), NewUserFragmentMVP.View {
     }
 
     override fun loadViewModel(user: User) {
-        mostrarResultado(user.name + " " + user.lastName)
-        etNombre.setText(user.name)
-        etApellido.setText(user.lastName)
+        mostrarResultado(user.nombre + " " + user.apellido)
+        etNombre.setText(user.nombre)
+        etApellido.setText(user.apellido)
     }
 
     override fun nextPage() {

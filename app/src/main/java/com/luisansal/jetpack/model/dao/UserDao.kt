@@ -20,15 +20,15 @@ interface UserDao {
     @Query("DELETE FROM tbluser")
     fun deleteAll()
 
-    @Query("SELECT * from tbluser ORDER BY name ASC")
+    @Query("SELECT * from tbluser ORDER BY nombre ASC")
     fun findAllUsers(): LiveData<List<User>>
 
-    @Query("SELECT * from tbluser ORDER BY name ASC")
+    @Query("SELECT * from tbluser ORDER BY nombre ASC")
     fun findAllUsersInline(): List<User>
 
     // The Integer type parameter tells Room to use a PositionalDataSource
     // object, with position-based loading under the hood.
-    @Query("SELECT * FROM tbluser ORDER BY name asc")
+    @Query("SELECT * FROM tbluser ORDER BY nombre asc")
     fun findAllUsersPaging(): DataSource.Factory<Int, User>
 
 

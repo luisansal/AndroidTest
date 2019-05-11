@@ -1,4 +1,4 @@
-package com.luisansal.jetpack.feature.otros
+package com.luisansal.jetpack.feature.listadopaginadouser
 
 import android.content.Context
 import android.util.Log
@@ -62,9 +62,7 @@ class LiveDataInteractorTest : BaseIntegrationTest() {
     fun validarRvUsuariosPopulado() {
         mInteractor.attachPresenter(listUserFragmentPresenter)
 
-        val user = User()
-        user.name = "Luis"
-        user.dni = "70668281"
+        val user = User("70668281","Luis","Sanchez")
 
         userRepository.save(user)
         val allUsers = LivePagedListBuilder(userRepository.allUsersPaging, 50).build()
@@ -105,19 +103,11 @@ class LiveDataInteractorTest : BaseIntegrationTest() {
         verify(listUserFragmentPresenter).cantidadValida()
     }
 
-    fun generateData(){
-
-        var user = User()
-        user.name = "Juan"
-        user.lastName = "Alvarez"
-        user.dni = "05159410"
+    fun generateData() {
 
         val users = ArrayList<User>()
         for (i in 0..999) {
-            user = User()
-            user.name = "User" + (i + 1)
-            user.lastName = "Apell" + (i + 1)
-            user.dni = "dni" + (i + 1)
+            val user = User("dni" + (i + 1), "User" + (i + 1), "Apell" + (i + 1))
             users.add(user)
         }
         userRepository.saveAll(users)

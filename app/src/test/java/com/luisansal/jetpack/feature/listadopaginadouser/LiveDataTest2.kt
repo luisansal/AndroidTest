@@ -1,4 +1,4 @@
-package com.luisansal.jetpack.feature.otros
+package com.luisansal.jetpack.feature.listadopaginadouser
 
 import android.content.Context
 import android.util.Log

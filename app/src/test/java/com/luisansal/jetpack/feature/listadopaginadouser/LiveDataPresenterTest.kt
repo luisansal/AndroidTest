@@ -1,4 +1,4 @@
-package com.luisansal.jetpack.feature.otros
+package com.luisansal.jetpack.feature.listadopaginadouser
 
 import android.content.Context
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
@@ -96,19 +96,14 @@ class LiveDataPresenterTest : BaseIntegrationTest(){
 
         userRepo.deleteAll()
 
-        var user = User()
-        user.name = "Juan"
-        user.lastName = "Alvarez"
-        user.dni = "05159410"
+        var user = User("05159410","Juan","Alvarez")
         val lastUserId = userRepo.save(user)
 
 
         val users = ArrayList<User>()
         for (i in 0..999) {
-            user = User()
-            user.name = "User ${i+1}"
-            user.lastName = "Apell ${i+1}"
-            user.dni = "dni ${i+1}"
+            user = User("dni ${i+1}","User ${i+1}","Apell ${i+1}")
+
             users.add(user)
         }
         userRepo.saveAll(users)
