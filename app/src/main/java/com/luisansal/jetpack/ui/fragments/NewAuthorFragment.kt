@@ -8,13 +8,21 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.luisansal.jetpack.R
 import com.luisansal.jetpack.model.domain.Author
-import com.luisansal.jetpack.ui.mvp.NewAuthorFragmentMVP
+import com.luisansal.jetpack.ui.mvp.author.NewAuthorFragmentMVP
 import com.luisansal.jetpack.ui.mvp.author.NewAuthorFragmentPresenter
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_new_author.*
 import javax.inject.Inject
 
 class NewAuthorFragment : Fragment(), NewAuthorFragmentMVP.View {
+    override fun mostrarErrorDni() {
+        Toast.makeText(context,"Longitud de caracteres incorrecta de DNI",Toast.LENGTH_LONG).show()
+    }
+
+    override fun mostrarErrorCamposObligatorios() {
+        Toast.makeText(context,"Todos los campos son obligatorios",Toast.LENGTH_LONG).show()
+    }
+
     override fun camposVacios() {
         etDni.setText(author?.dni)
         etNombre.setText(author?.nombre)

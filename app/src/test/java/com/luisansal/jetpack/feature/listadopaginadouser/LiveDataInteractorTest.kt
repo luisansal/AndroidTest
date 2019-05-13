@@ -59,7 +59,7 @@ class LiveDataInteractorTest : BaseIntegrationTest() {
     }
 
     @Test
-    fun validarRvUsuariosPopulado() {
+    fun `validar recyclerview de usuarios populados`() {
         mInteractor.attachPresenter(listUserFragmentPresenter)
 
         val user = User("70668281","Luis","Sanchez")
@@ -81,7 +81,7 @@ class LiveDataInteractorTest : BaseIntegrationTest() {
     }
 
     @Test
-    fun validarCantidadUsuarios() {
+    fun `validar la cantidad de usuarios`() {
 
         mInteractor.attachPresenter(listUserFragmentPresenter)
 

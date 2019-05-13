@@ -56,11 +56,4 @@ class NewAuthorUseCaseTest : BaseIntegrationTest() {
         })
         Assert.assertTrue(ok)
     }
-
-    @Test
-    fun `verificar campos obligatorios`(){
-        val author = Author("jj","jn","Lopez")
-
-        Assert.assertTrue(authorUseCase.comprobarCamposObligatorios(author))
-    }
 }

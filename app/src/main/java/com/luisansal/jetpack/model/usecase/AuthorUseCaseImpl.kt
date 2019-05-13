@@ -8,21 +8,19 @@ import com.luisansal.jetpack.common.observer.BaseSingleObserver
 import com.luisansal.jetpack.model.repository.AuthorRepository
 import com.luisansal.jetpack.model.usecase.interfaces.AuthorUseCase
 import com.luisansal.jetpack.model.usecase.interfaces.UseCase
+import com.luisansal.jetpack.model.validation.AuthorValidation
 import javax.inject.Inject
 
 class AuthorUseCaseImpl @Inject constructor(private val authorRepository: AuthorRepository, threadExecutor: ThreadExecutor,
                                             postExecutionThread: PostExecutionThread) : UseCase(threadExecutor, postExecutionThread)
         , AuthorUseCase {
+    override fun validarDniUsuario(dni: String): Boolean {
+        return AuthorValidation.dniCorrecto(dni)
+    }
 
 
     override fun comprobarCamposObligatorios(author: Author): Boolean {
-        if (author.dni.isEmpty())
-            return false
-        if (author.nombre.isEmpty())
-            return false
-        if (author.apellido.isEmpty())
-            return false
-        return true
+        return AuthorValidation.comprobarCamposObligatorios(author)
     }
 
     override fun guardarAuthor(author: Author, subscriber: BaseCompletableObserver) {

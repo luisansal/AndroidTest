@@ -2,7 +2,7 @@ package com.luisansal.jetpack.feature.nuevoauthor
 
 import com.luisansal.jetpack.dagger.base.BaseIntegrationTest
 import com.luisansal.jetpack.model.domain.Author
-import com.luisansal.jetpack.ui.mvp.NewAuthorFragmentMVP
+import com.luisansal.jetpack.ui.mvp.author.NewAuthorFragmentMVP
 import com.luisansal.jetpack.ui.mvp.author.NewAuthorFragmentPresenter
 import org.junit.Before
 import org.junit.Rule
@@ -53,7 +53,7 @@ class NewAuthorPresenterTest : BaseIntegrationTest() {
     }
 
     @Test
-    fun `verificar limpiar campos`(){
+    fun `verificar que se limpien los campos`(){
 
         val author = Author("","","")
         `when`(view.author).thenReturn(author)

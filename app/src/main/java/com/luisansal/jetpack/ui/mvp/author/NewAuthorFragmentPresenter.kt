@@ -4,7 +4,6 @@ import com.luisansal.jetpack.common.observer.BaseCompletableObserver
 import com.luisansal.jetpack.common.observer.BaseSingleObserver
 import com.luisansal.jetpack.model.domain.Author
 import com.luisansal.jetpack.model.usecase.interfaces.AuthorUseCase
-import com.luisansal.jetpack.ui.mvp.NewAuthorFragmentMVP
 import javax.inject.Inject
 
 class NewAuthorFragmentPresenter @Inject constructor(val authorUseCase: AuthorUseCase) : NewAuthorFragmentMVP.Presenter {
@@ -37,14 +36,23 @@ class NewAuthorFragmentPresenter @Inject constructor(val authorUseCase: AuthorUs
 
     override fun guardarAuthor() {
         mView.author?.let {
-            if (authorUseCase.comprobarCamposObligatorios(it)) {
+            var validacionCorrecta = true
+            if (!authorUseCase.comprobarCamposObligatorios(it)) {
+                validacionCorrecta = false
+                mView.mostrarErrorCamposObligatorios()
+            }
+            if (!authorUseCase.validarDniUsuario(it.dni)) {
+                validacionCorrecta = false
+                mView.mostrarErrorDni()
+            }
+
+            if (validacionCorrecta)
                 authorUseCase.guardarAuthor(it, object : BaseCompletableObserver() {
                     override fun onComplete() {
                         super.onComplete()
                         mView.notificarGuardado()
                     }
                 })
-            }
         }
     }
 

@@ -5,7 +5,7 @@ import com.luisansal.jetpack.ui.fragments.NewAuthorFragment
 import com.luisansal.jetpack.ui.fragments.NewUserFragment
 import com.luisansal.jetpack.ui.mvp.ListUserFragmentInteractor
 import com.luisansal.jetpack.ui.mvp.ListUserFragmentMVP
-import com.luisansal.jetpack.ui.mvp.NewAuthorFragmentMVP
+import com.luisansal.jetpack.ui.mvp.author.NewAuthorFragmentMVP
 import com.luisansal.jetpack.ui.mvp.NewUserFragmentMVP
 import dagger.Binds
 import dagger.Module
