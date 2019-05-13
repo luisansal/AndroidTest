@@ -8,7 +8,13 @@ import dagger.android.support.AndroidSupportInjectionModule
 
 
 @Singleton
-@Component(modules = [ AndroidSupportInjectionModule::class, AppModule::class, BuildersModule::class])
+@Component(modules = [
+    AppModule::class,
+    AppBindingModule::class,
+    ThreatExecutor::class,
+    BuildersModule::class,
+    AndroidSupportInjectionModule::class
+])
 interface AppComponent {
 
     @Component.Builder
@@ -16,6 +22,7 @@ interface AppComponent {
 
         @BindsInstance
         fun application(application: MyApplication): Builder
+
         fun build(): AppComponent
 
     }

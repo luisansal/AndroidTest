@@ -1,5 +1,7 @@
 package com.luisansal.jetpack.model.usecase
 
+import com.luisansal.jetpack.common.executor.PostExecutionThread
+import com.luisansal.jetpack.common.executor.ThreadExecutor
 import com.luisansal.jetpack.model.domain.Author
 import com.luisansal.jetpack.common.observer.BaseCompletableObserver
 import com.luisansal.jetpack.common.observer.BaseSingleObserver
@@ -8,7 +10,11 @@ import com.luisansal.jetpack.model.usecase.interfaces.AuthorUseCase
 import com.luisansal.jetpack.model.usecase.interfaces.UseCase
 import javax.inject.Inject
 
-class AuthorUseCaseImpl @Inject constructor(private val authorRepository: AuthorRepository) : UseCase(), AuthorUseCase {
+class AuthorUseCaseImpl @Inject constructor(private val authorRepository: AuthorRepository, threadExecutor: ThreadExecutor,
+                                            postExecutionThread: PostExecutionThread) : UseCase(threadExecutor, postExecutionThread)
+        , AuthorUseCase {
+
+
     override fun comprobarCamposObligatorios(author: Author): Boolean {
         if (author.dni.isEmpty())
             return false

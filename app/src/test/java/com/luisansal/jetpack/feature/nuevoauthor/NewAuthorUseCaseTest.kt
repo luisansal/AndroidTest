@@ -4,8 +4,7 @@ import com.luisansal.jetpack.common.observer.BaseCompletableObserver
 import com.luisansal.jetpack.common.observer.BaseSingleObserver
 import com.luisansal.jetpack.dagger.base.BaseIntegrationTest
 import com.luisansal.jetpack.model.domain.Author
-import com.luisansal.jetpack.model.domain.User
-import com.luisansal.jetpack.model.usecase.AuthorUseCaseImpl
+import com.luisansal.jetpack.model.usecase.interfaces.AuthorUseCase
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
@@ -14,7 +13,7 @@ import javax.inject.Inject
 class NewAuthorUseCaseTest : BaseIntegrationTest() {
 
     @Inject
-    lateinit var authorUseCaseImpl: AuthorUseCaseImpl
+    lateinit var authorUseCase: AuthorUseCase
 
     @Before
     fun setup() {
@@ -26,7 +25,8 @@ class NewAuthorUseCaseTest : BaseIntegrationTest() {
         val author = Author("234234","luis","sanchez")
 
         var ok = false
-        authorUseCaseImpl.guardarAuthor(author, object : BaseCompletableObserver() {
+
+        authorUseCase.guardarAuthor(author, object : BaseCompletableObserver() {
             override fun onComplete() {
                 ok = true
 
@@ -45,7 +45,7 @@ class NewAuthorUseCaseTest : BaseIntegrationTest() {
         `guardar author`()
 
         var ok = false
-        authorUseCaseImpl.getAuthorByDni("234234", object : BaseSingleObserver<Author>() {
+        authorUseCase.getAuthorByDni("234234", object : BaseSingleObserver<Author>() {
             override fun onSuccess(t: Author) {
                 ok = true
             }
@@ -61,6 +61,6 @@ class NewAuthorUseCaseTest : BaseIntegrationTest() {
     fun `verificar campos obligatorios`(){
         val author = Author("jj","jn","Lopez")
 
-        Assert.assertTrue(authorUseCaseImpl.comprobarCamposObligatorios(author))
+        Assert.assertTrue(authorUseCase.comprobarCamposObligatorios(author))
     }
 }

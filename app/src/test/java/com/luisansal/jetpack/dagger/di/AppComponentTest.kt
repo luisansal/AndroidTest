@@ -1,9 +1,6 @@
 package com.luisansal.jetpack.dagger.di
 
-import com.luisansal.jetpack.di.AppComponent
-import com.luisansal.jetpack.di.AppModule
-import com.luisansal.jetpack.di.BuildersModule
-import com.luisansal.jetpack.di.FragmentBindModule
+import com.luisansal.jetpack.di.*
 import com.luisansal.jetpack.feature.nuevoauthor.persistencia.GuardarAuthorPersistenceTest
 import com.luisansal.jetpack.feature.listadopaginadouser.LiveDataInteractorTest
 import com.luisansal.jetpack.feature.listadopaginadouser.LiveDataPresenterTest
@@ -19,8 +16,9 @@ import dagger.android.support.AndroidSupportInjectionModule
 @Singleton
 @Component(modules = [
     AppModule::class,
+    AppBindingModule::class,
+    ThreadExecutorTest::class,
     BuildersModule::class,
-    FragmentBindModule::class,
     AndroidSupportInjectionModule::class
 ])
 interface AppComponentTest : AppComponent {

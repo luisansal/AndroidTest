@@ -1,9 +1,5 @@
 package com.luisansal.jetpack.di
 
-import com.luisansal.jetpack.model.usecase.AuthorUseCaseImpl
-import com.luisansal.jetpack.model.usecase.UserUseCaseImpl
-import com.luisansal.jetpack.model.usecase.interfaces.AuthorUseCase
-import com.luisansal.jetpack.model.usecase.interfaces.UserUseCase
 import com.luisansal.jetpack.ui.fragments.ListUserFragment
 import com.luisansal.jetpack.ui.fragments.NewAuthorFragment
 import com.luisansal.jetpack.ui.fragments.NewUserFragment
@@ -28,13 +24,7 @@ abstract class FragmentBindModule {
     abstract fun provideNewUserView(newUserFragment: NewUserFragment): NewUserFragmentMVP.View
 
     @Binds
-    abstract fun provideUserUseCase(userUseCase: UserUseCaseImpl): UserUseCase
-
-    @Binds
     abstract fun provideAuthorView(newAuthorFragment: NewAuthorFragment): NewAuthorFragmentMVP.View
-
-    @Binds
-    abstract fun provideAuthorUseCase(authorUseCaseImpl: AuthorUseCaseImpl): AuthorUseCase
 }
 
 
