@@ -49,7 +49,6 @@ class NewAuthorFragmentPresenter @Inject constructor(val authorUseCase: AuthorUs
             if (validacionCorrecta)
                 authorUseCase.guardarAuthor(it, object : BaseCompletableObserver() {
                     override fun onComplete() {
-                        super.onComplete()
                         mView.notificarGuardado()
                     }
                 })
