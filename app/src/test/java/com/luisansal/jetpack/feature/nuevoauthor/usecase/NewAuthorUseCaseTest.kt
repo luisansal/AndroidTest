@@ -1,4 +1,4 @@
-package com.luisansal.jetpack.feature.nuevoauthor
+package com.luisansal.jetpack.feature.nuevoauthor.usecase
 
 import com.luisansal.jetpack.common.observer.BaseCompletableObserver
 import com.luisansal.jetpack.common.observer.BaseSingleObserver

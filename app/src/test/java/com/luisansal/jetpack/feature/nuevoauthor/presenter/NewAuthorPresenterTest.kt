@@ -1,4 +1,4 @@
-package com.luisansal.jetpack.feature.nuevoauthor
+package com.luisansal.jetpack.feature.nuevoauthor.presenter
 
 import com.luisansal.jetpack.dagger.base.BaseIntegrationTest
 import com.luisansal.jetpack.model.domain.Author

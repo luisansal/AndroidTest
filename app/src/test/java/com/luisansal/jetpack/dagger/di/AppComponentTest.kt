@@ -4,8 +4,8 @@ import com.luisansal.jetpack.di.*
 import com.luisansal.jetpack.feature.nuevoauthor.persistencia.GuardarAuthorPersistenceTest
 import com.luisansal.jetpack.feature.listadopaginadouser.LiveDataInteractorTest
 import com.luisansal.jetpack.feature.listadopaginadouser.LiveDataPresenterTest
-import com.luisansal.jetpack.feature.nuevoauthor.NewAuthorPresenterTest
-import com.luisansal.jetpack.feature.nuevoauthor.NewAuthorUseCaseTest
+import com.luisansal.jetpack.feature.nuevoauthor.presenter.NewAuthorPresenterTest
+import com.luisansal.jetpack.feature.nuevoauthor.usecase.NewAuthorUseCaseTest
 import com.luisansal.jetpack.model.MyApplication
 import dagger.Component
 import javax.inject.Singleton

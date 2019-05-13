@@ -1,4 +1,4 @@
-package com.luisansal.jetpack.feature.nuevoauthor
+package com.luisansal.jetpack.feature.nuevoauthor.validation
 
 import com.luisansal.jetpack.model.domain.Author
 import com.luisansal.jetpack.model.validation.AuthorValidation
