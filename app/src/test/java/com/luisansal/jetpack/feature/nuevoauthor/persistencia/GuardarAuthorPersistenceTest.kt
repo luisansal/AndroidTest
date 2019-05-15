@@ -33,7 +33,7 @@ class GuardarAuthorPersistenceTest : BaseIntegrationTest() {
     }
 
     @Test
-    fun encontrarAuthor() {
+    fun `encontrar author`() {
         `guardar author`()
 
         val dni = "0000001"
