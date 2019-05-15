@@ -8,9 +8,9 @@ import io.reactivex.schedulers.Schedulers
 import org.mockito.Mockito
 
 @Module
-class ThreadExecutorTest {
+class ThreadExecutorModuleTest {
     @Provides
-    fun provideThreadExecutor () : ThreadExecutor{
+    fun provideThreadExecutor () : ThreadExecutor {
         val mock = Mockito.mock(ThreadExecutor::class.java)
         Mockito.`when`(mock.scheduler).thenReturn(Schedulers.trampoline())
         return mock

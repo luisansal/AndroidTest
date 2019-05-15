@@ -1,4 +1,4 @@
-package com.luisansal.jetpack.ui.mvp
+package com.luisansal.jetpack.ui.mvp.user
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer

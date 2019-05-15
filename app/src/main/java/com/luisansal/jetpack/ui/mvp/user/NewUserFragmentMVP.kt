@@ -1,4 +1,4 @@
-package com.luisansal.jetpack.ui.mvp
+package com.luisansal.jetpack.ui.mvp.user
 
 import com.luisansal.jetpack.common.interfaces.CrudListener
 import com.luisansal.jetpack.model.domain.User

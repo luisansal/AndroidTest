@@ -13,8 +13,8 @@ import com.luisansal.jetpack.R
 import com.luisansal.jetpack.common.interfaces.ActionsViewPagerListener
 import com.luisansal.jetpack.common.interfaces.CrudListener
 import com.luisansal.jetpack.model.domain.User
-import com.luisansal.jetpack.ui.mvp.NewUserFragmentMVP
-import com.luisansal.jetpack.ui.mvp.NewUserFragmentPresenter
+import com.luisansal.jetpack.ui.mvp.user.NewUserFragmentMVP
+import com.luisansal.jetpack.ui.mvp.user.NewUserFragmentPresenter
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_new_user.*
 import javax.inject.Inject

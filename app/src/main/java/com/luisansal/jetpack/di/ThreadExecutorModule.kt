@@ -8,7 +8,7 @@ import dagger.Binds
 import dagger.Module
 
 @Module
-abstract class ThreatExecutor {
+abstract class ThreadExecutorModule {
     @Binds
     abstract fun bindThreadExecutor(jobExecutor: JobExecutor): ThreadExecutor
 

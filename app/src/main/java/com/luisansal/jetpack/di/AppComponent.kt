@@ -11,7 +11,7 @@ import dagger.android.support.AndroidSupportInjectionModule
 @Component(modules = [
     AppModule::class,
     AppBindingModule::class,
-    ThreatExecutor::class,
+    ThreadExecutorModule::class,
     BuildersModule::class,
     AndroidSupportInjectionModule::class
 ])

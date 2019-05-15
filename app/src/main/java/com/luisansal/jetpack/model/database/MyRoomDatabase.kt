@@ -33,7 +33,7 @@ abstract class MyRoomDatabase : RoomDatabase() {
 
     abstract fun authorDao(): AuthorDao
 
-    private class PopulateDbAsync (myRoomDatabase: MyRoomDatabase) : AsyncTask<Void, Void, Void>() {
+    private class PopulateDbAsync(myRoomDatabase: MyRoomDatabase) : AsyncTask<Void, Void, Void>() {
 
         private val userDao: UserDao
         private val visitDao: VisitDao
@@ -46,7 +46,7 @@ abstract class MyRoomDatabase : RoomDatabase() {
         override fun doInBackground(vararg voids: Void): Void? {
             userDao.deleteAll()
 
-            var user = User("05159410","Juan","Alvarez")
+            var user = User("05159410", "Juan", "Alvarez")
 
             val lastUserId = userDao.save(user)
 
@@ -56,7 +56,7 @@ abstract class MyRoomDatabase : RoomDatabase() {
 
             val users = ArrayList<User>()
             for (i in 0..999) {
-                user = User("User" + (i + 1),"Apell" + (i + 1),"dni" + (i + 1))
+                user = User("User" + (i + 1), "Apell" + (i + 1), "dni" + (i + 1))
                 users.add(user)
             }
             userDao.saveAll(users)
@@ -73,26 +73,39 @@ abstract class MyRoomDatabase : RoomDatabase() {
         private var INSTANCE: MyRoomDatabase? = null
 
         fun getDatabase(context: Context): MyRoomDatabase? {
-            if (INSTANCE == null) {
+            return getDatabase(context, false)
+        }
+
+        fun getDatabase(context: Context, reopen: Boolean): MyRoomDatabase? {
+            if (INSTANCE == null && !reopen) {
                 synchronized(MyRoomDatabase::class.java) {
                     if (INSTANCE == null) {
-                        INSTANCE = Room.databaseBuilder<MyRoomDatabase>(context, MyRoomDatabase::class.java, "myDatabase")
-                                .fallbackToDestructiveMigration()
-                                .allowMainThreadQueries()
-                                .addCallback(sRoomDatabaseCallback)
-                                .build()
+                        doInstance(context)
                     }
+                }
+            } else {
+                synchronized(MyRoomDatabase::class.java) {
+                    doInstance(context)
                 }
             }
             return INSTANCE
         }
+
+        fun doInstance(context: Context) {
+            INSTANCE = Room.databaseBuilder<MyRoomDatabase>(context, MyRoomDatabase::class.java, "myDatabase")
+                    .fallbackToDestructiveMigration()
+                    .allowMainThreadQueries()
+                    .addCallback(sRoomDatabaseCallback)
+                    .build()
+        }
+
 
         private val sRoomDatabaseCallback = object : RoomDatabase.Callback() {
             override fun onOpen(db: SupportSQLiteDatabase) {
                 super.onOpen(db)
                 try {
                     PopulateDbAsync(INSTANCE!!).execute()
-                } catch (e: Exception){
+                } catch (e: Exception) {
 //                    e.printStackTrace()
                 }
 

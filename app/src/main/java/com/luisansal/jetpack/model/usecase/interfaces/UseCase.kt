@@ -29,31 +29,26 @@ abstract class UseCase protected constructor
     }
 
     internal inline fun <reified T> execute(
-            single: Single<T>, observer: SingleObserver<T>) {
+            single: Single<T>, observer: SingleObserver<T>) : Single<T>{
         Preconditions.checkNotNull(observer)
-        if (threadExecutor.scheduler is TrampolineScheduler) {
-            single
-                    .subscribeWith(observer)
-        } else {
+
             single
                     .subscribeOn(threadExecutor.scheduler)
                     .observeOn(postExecutionThread.scheduler)
                     .subscribeWith(observer)
-        }
+
+
+        return single
     }
 
     internal fun execute(
-            completable: Completable, observer: CompletableObserver) {
+            completable: Completable, observer: CompletableObserver) : Completable {
         Preconditions.checkNotNull(observer)
-        if (threadExecutor.scheduler is TrampolineScheduler) {
-            completable
-                    .subscribeWith(observer)
-        } else {
             completable
                     .subscribeOn(Schedulers.from(threadExecutor))
                     .observeOn(postExecutionThread.scheduler)
                     .subscribeWith(observer)
-        }
+        return completable
     }
 
     fun dispose() {

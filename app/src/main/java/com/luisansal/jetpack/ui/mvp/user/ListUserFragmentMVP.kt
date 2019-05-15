@@ -1,4 +1,4 @@
-package com.luisansal.jetpack.ui.mvp
+package com.luisansal.jetpack.ui.mvp.user
 
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
@@ -39,7 +39,7 @@ interface ListUserFragmentMVP {
     }
 
     interface Interactor{
-        fun attachPresenter(mPresenter: ListUserFragmentMVP.Presenter)
+        fun attachPresenter(mPresenter: Presenter)
         fun setupLivePaged()
         fun validarCantidadPaginacion(numeroComparar : Int)
         fun validarRvUsuariosPopulado()
