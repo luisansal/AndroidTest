@@ -52,7 +52,9 @@ class NewAuthorFragment : Fragment(), NewAuthorFragmentMVP.View{
     }
 
     override fun camposVacios() {
-
+        etDni.setText(author?.dni)
+        etNombre.setText(author?.nombre)
+        etApellido.setText(author?.apellido)
     }
 
     override fun mostrarErrorDni() {

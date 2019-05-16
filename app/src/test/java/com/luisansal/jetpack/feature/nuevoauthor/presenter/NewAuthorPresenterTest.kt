@@ -55,5 +55,9 @@ class NewAuthorPresenterTest : BaseIntegrationTest() {
     @Test
     fun `verificar que se limpien los campos`(){
 
+        newAuthorPresenter.setView(mView)
+        newAuthorPresenter.limpiarCampos()
+
+        Mockito.verify(mView).camposVacios()
     }
 }

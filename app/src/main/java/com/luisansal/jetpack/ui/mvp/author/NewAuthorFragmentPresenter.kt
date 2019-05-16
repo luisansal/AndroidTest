@@ -40,7 +40,8 @@ class NewAuthorFragmentPresenter @Inject constructor(private val authorUseCase: 
     }
 
     override fun limpiarCampos() {
-
+        mView.author = Author("","","")
+        mView.camposVacios()
     }
 
 }
