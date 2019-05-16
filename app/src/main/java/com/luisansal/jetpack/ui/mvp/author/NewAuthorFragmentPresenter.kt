@@ -1,6 +1,8 @@
 package com.luisansal.jetpack.ui.mvp.author
 
 import com.luisansal.jetpack.common.observer.BaseCompletableObserver
+import com.luisansal.jetpack.common.observer.BaseSingleObserver
+import com.luisansal.jetpack.model.domain.Author
 import com.luisansal.jetpack.model.usecase.interfaces.AuthorUseCase
 import javax.inject.Inject
 
@@ -27,7 +29,13 @@ class NewAuthorFragmentPresenter @Inject constructor(private val authorUseCase: 
     }
 
     override fun buscarAuthor() {
-
+        mView.dni?.let {
+            authorUseCase.buscarAuthorByDni(it, object : BaseSingleObserver<Author>(){
+                override fun onSuccess(t: Author) {
+                    mView.authorEncontrado()
+                }
+            })
+        }
     }
 
     override fun limpiarCampos() {

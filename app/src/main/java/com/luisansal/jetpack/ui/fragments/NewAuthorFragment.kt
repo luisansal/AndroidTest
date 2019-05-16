@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.luisansal.jetpack.R
 import com.luisansal.jetpack.model.domain.Author
@@ -20,28 +21,34 @@ class NewAuthorFragment : Fragment(), NewAuthorFragmentMVP.View{
 
     override fun onClickBtnGuardar() {
         btnGuardar.setOnClickListener {
+            author = Author(etDni.text.toString(),etNombre.text.toString(),etApellido.text.toString())
             mPresenter.guardarAuthor()
         }
     }
 
     override fun onClickBtnBuscar() {
-
+        btnBuscar.setOnClickListener {
+            dni = etDni.text.toString()
+            mPresenter.buscarAuthor()
+        }
     }
 
     override fun notificarGuardado() {
-
+        Toast.makeText(context,"Author ${author?.nombre} ${author?.apellido} Guardado",Toast.LENGTH_LONG).show()
     }
 
     override fun cargarCamposEnVista() {
-
+        etNombre.setText(author?.nombre)
+        etApellido.setText(author?.apellido)
     }
 
     override fun authorEncontrado() {
-
+        cargarCamposEnVista()
+        notificarEncontrado()
     }
 
     override fun notificarEncontrado() {
-
+        Toast.makeText(context,"Author ${author?.nombre} ${author?.apellido} Encontrado",Toast.LENGTH_LONG).show()
     }
 
     override fun camposVacios() {

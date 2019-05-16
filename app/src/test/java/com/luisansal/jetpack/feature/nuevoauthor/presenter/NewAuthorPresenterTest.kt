@@ -41,10 +41,15 @@ class NewAuthorPresenterTest : BaseIntegrationTest() {
 
     @Test
     fun `encontrar author`(){
+        `guardar author`()
+
+        val dni = "0000001"
+        Mockito.`when`(mView.dni).thenReturn(dni)
+
         newAuthorPresenter.setView(mView)
         newAuthorPresenter.buscarAuthor()
 
-        Mockito.verify(mView).notificarEncontrado()
+        Mockito.verify(mView).authorEncontrado()
     }
 
     @Test
