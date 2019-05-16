@@ -16,6 +16,7 @@ interface NewAuthorFragmentMVP {
         fun mostrarErrorCamposObligatorios()
         var author : Author?
         var dni : String?
+        fun notificarNoEncontrado()
     }
 
     interface Presenter{

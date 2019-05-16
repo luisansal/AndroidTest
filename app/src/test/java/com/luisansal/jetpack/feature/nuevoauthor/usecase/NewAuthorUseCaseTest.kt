@@ -50,13 +50,13 @@ class NewAuthorUseCaseTest : BaseIntegrationTest() {
 
     @Test
     fun `comprobar campos obligatorios`(){
-        val author = Author("","Pepito","Jimenez")
+        val author = Author("1234567","Pepito","Jimenez")
         Assert.assertTrue(authorUseCase.comprobarCamposObligatorios(author))
     }
 
     @Test
     fun `comprobar dni`(){
-        val dni = "000002"
+        val dni = "0000002"
         Assert.assertTrue(authorUseCase.validarDniUsuario(dni))
     }
 }

@@ -35,6 +35,8 @@ class NewAuthorFragment : Fragment(), NewAuthorFragmentMVP.View {
 
     override fun notificarGuardado() {
         Toast.makeText(context, "Author ${author?.nombre} ${author?.apellido} Guardado", Toast.LENGTH_LONG).show()
+        author = Author("","","")
+        camposVacios()
     }
 
     override fun cargarCamposEnVista() {
@@ -49,6 +51,10 @@ class NewAuthorFragment : Fragment(), NewAuthorFragmentMVP.View {
 
     override fun notificarEncontrado() {
         Toast.makeText(context, "Author ${author?.nombre} ${author?.apellido} Encontrado", Toast.LENGTH_LONG).show()
+    }
+
+    override fun notificarNoEncontrado() {
+        Toast.makeText(context, "Author no Encontrado", Toast.LENGTH_LONG).show()
     }
 
     override fun camposVacios() {
@@ -77,6 +83,12 @@ class NewAuthorFragment : Fragment(), NewAuthorFragmentMVP.View {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_new_author, container, false)
         return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        mPresenter.setView(this)
+        mPresenter.init()
     }
 
     companion object {

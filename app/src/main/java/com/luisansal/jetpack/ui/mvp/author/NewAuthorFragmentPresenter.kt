@@ -8,7 +8,7 @@ import javax.inject.Inject
 
 class NewAuthorFragmentPresenter @Inject constructor(private val authorUseCase: AuthorUseCase) : NewAuthorFragmentMVP.Presenter {
 
-    lateinit var mView : NewAuthorFragmentMVP.View
+    lateinit var mView: NewAuthorFragmentMVP.View
 
     override fun setView(view: NewAuthorFragmentMVP.View) {
         mView = view
@@ -16,13 +16,25 @@ class NewAuthorFragmentPresenter @Inject constructor(private val authorUseCase: 
 
     override fun init() {
         mView.onClickBtnGuardar()
+        mView.onClickBtnBuscar()
     }
 
     override fun guardarAuthor() {
         mView.author?.let {
-            authorUseCase.guardarAuthor(it, object : BaseCompletableObserver(){
+            authorUseCase.guardarAuthor(it, object : BaseCompletableObserver() {
                 override fun onComplete() {
+
+                    if (!authorUseCase.comprobarCamposObligatorios(it)) {
+                        mView.mostrarErrorCamposObligatorios()
+                        return
+                    }
+                    if (!authorUseCase.validarDniUsuario(it.dni)) {
+                        mView.mostrarErrorDni()
+                        return
+                    }
+
                     mView.notificarGuardado()
+
                 }
             })
         }
@@ -30,17 +42,21 @@ class NewAuthorFragmentPresenter @Inject constructor(private val authorUseCase: 
 
     override fun buscarAuthor() {
         mView.dni?.let {
-            authorUseCase.buscarAuthorByDni(it, object : BaseSingleObserver<Author>(){
+            authorUseCase.buscarAuthorByDni(it, object : BaseSingleObserver<Author>() {
                 override fun onSuccess(t: Author) {
                     mView.author = t
                     mView.authorEncontrado()
+                }
+
+                override fun onError(e: Throwable) {
+                    mView.notificarNoEncontrado()
                 }
             })
         }
     }
 
     override fun limpiarCampos() {
-        mView.author = Author("","","")
+        mView.author = Author("", "", "")
         mView.camposVacios()
     }
 

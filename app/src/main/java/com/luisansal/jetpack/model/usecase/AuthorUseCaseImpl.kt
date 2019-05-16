@@ -21,11 +21,11 @@ class AuthorUseCaseImpl @Inject constructor(private val authorRepository: Author
     override var db: MyRoomDatabase? = authorRepository.db
 
     override fun validarDniUsuario(dni: String): Boolean {
-        return false
+        return AuthorValidation.dniCorrecto(dni)
     }
 
     override fun comprobarCamposObligatorios(author: Author): Boolean {
-        return false
+        return AuthorValidation.comprobarCamposObligatorios(author)
     }
 
     override fun guardarAuthor(author: Author, subscriber: BaseCompletableObserver): Completable {
