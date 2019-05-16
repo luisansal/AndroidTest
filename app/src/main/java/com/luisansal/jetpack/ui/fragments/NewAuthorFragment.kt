@@ -6,9 +6,52 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.luisansal.jetpack.R
+import com.luisansal.jetpack.model.domain.Author
+import com.luisansal.jetpack.ui.mvp.author.NewAuthorFragmentMVP
 import dagger.android.support.AndroidSupportInjection
 
-class NewAuthorFragment : Fragment(){
+class NewAuthorFragment : Fragment(), NewAuthorFragmentMVP.View{
+
+
+    override fun onClickBtnGuardar() {
+
+    }
+
+    override fun onClickBtnBuscar() {
+
+    }
+
+    override fun notificarGuardado() {
+
+    }
+
+    override fun cargarCamposEnVista() {
+
+    }
+
+    override fun authorEncontrado() {
+
+    }
+
+    override fun notificarEncontrado() {
+
+    }
+
+    override fun camposVacios() {
+
+    }
+
+    override fun mostrarErrorDni() {
+
+    }
+
+    override fun mostrarErrorCamposObligatorios() {
+
+    }
+
+    override var author: Author? = null
+
+    override var dni: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
