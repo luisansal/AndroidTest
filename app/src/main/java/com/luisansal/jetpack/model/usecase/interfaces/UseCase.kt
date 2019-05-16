@@ -32,10 +32,15 @@ abstract class UseCase protected constructor
             single: Single<T>, observer: SingleObserver<T>) : Single<T>{
         Preconditions.checkNotNull(observer)
 
+        if (threadExecutor.scheduler is TrampolineScheduler) {
+            single
+                    .subscribeWith(observer)
+        } else {
             single
                     .subscribeOn(threadExecutor.scheduler)
                     .observeOn(postExecutionThread.scheduler)
                     .subscribeWith(observer)
+        }
 
 
         return single
@@ -44,10 +49,15 @@ abstract class UseCase protected constructor
     internal fun execute(
             completable: Completable, observer: CompletableObserver) : Completable {
         Preconditions.checkNotNull(observer)
+        if (threadExecutor.scheduler is TrampolineScheduler) {
+            completable
+                    .subscribeWith(observer)
+        } else {
             completable
                     .subscribeOn(Schedulers.from(threadExecutor))
                     .observeOn(postExecutionThread.scheduler)
                     .subscribeWith(observer)
+        }
         return completable
     }
 
