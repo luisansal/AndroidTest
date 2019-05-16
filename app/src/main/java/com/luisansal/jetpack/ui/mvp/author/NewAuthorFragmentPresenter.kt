@@ -32,6 +32,7 @@ class NewAuthorFragmentPresenter @Inject constructor(private val authorUseCase: 
         mView.dni?.let {
             authorUseCase.buscarAuthorByDni(it, object : BaseSingleObserver<Author>(){
                 override fun onSuccess(t: Author) {
+                    mView.author = t
                     mView.authorEncontrado()
                 }
             })

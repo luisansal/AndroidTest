@@ -4,6 +4,7 @@ import com.luisansal.jetpack.dagger.base.BaseIntegrationTest
 import com.luisansal.jetpack.model.domain.Author
 import com.luisansal.jetpack.ui.mvp.author.NewAuthorFragmentMVP
 import com.luisansal.jetpack.ui.mvp.author.NewAuthorFragmentPresenter
+import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -50,6 +51,7 @@ class NewAuthorPresenterTest : BaseIntegrationTest() {
         newAuthorPresenter.buscarAuthor()
 
         Mockito.verify(mView).authorEncontrado()
+        Assert.assertTrue((mView.author != null))
     }
 
     @Test
