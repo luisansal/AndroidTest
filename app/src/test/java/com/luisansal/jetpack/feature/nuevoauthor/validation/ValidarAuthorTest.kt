@@ -9,13 +9,13 @@ class ValidarAuthorTest {
 
     @Test
     fun `longitud dni correcto`() {
-        val dni = "00000001"
+        val dni = "0000001"
         Assert.assertTrue(AuthorValidation.dniCorrecto(dni))
     }
 
     @Test
     fun `verificar campos obligatorios`() {
-        val author = Author("0000001","","")
+        val author = Author("0000001","Melisa","Loza")
         Assert.assertTrue(AuthorValidation.comprobarCamposObligatorios(author))
     }
 }
