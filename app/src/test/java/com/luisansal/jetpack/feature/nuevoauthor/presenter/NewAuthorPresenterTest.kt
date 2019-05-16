@@ -41,7 +41,10 @@ class NewAuthorPresenterTest : BaseIntegrationTest() {
 
     @Test
     fun `encontrar author`(){
+        newAuthorPresenter.setView(mView)
+        newAuthorPresenter.buscarAuthor()
 
+        Mockito.verify(mView).notificarEncontrado()
     }
 
     @Test
