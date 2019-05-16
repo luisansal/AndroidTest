@@ -9,6 +9,7 @@ import com.luisansal.jetpack.model.database.MyRoomDatabase
 import com.luisansal.jetpack.model.repository.interfaces.AuthorRepository
 import com.luisansal.jetpack.model.usecase.interfaces.AuthorUseCase
 import com.luisansal.jetpack.model.usecase.interfaces.UseCase
+import com.luisansal.jetpack.model.validation.AuthorValidation
 import io.reactivex.Completable
 import io.reactivex.Single
 import javax.inject.Inject

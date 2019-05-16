@@ -14,14 +14,14 @@ import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_new_author.*
 import javax.inject.Inject
 
-class NewAuthorFragment : Fragment(), NewAuthorFragmentMVP.View{
+class NewAuthorFragment : Fragment(), NewAuthorFragmentMVP.View {
 
     @Inject
-    lateinit var mPresenter : NewAuthorFragmentPresenter
+    lateinit var mPresenter: NewAuthorFragmentPresenter
 
     override fun onClickBtnGuardar() {
         btnGuardar.setOnClickListener {
-            author = Author(etDni.text.toString(),etNombre.text.toString(),etApellido.text.toString())
+            author = Author(etDni.text.toString(), etNombre.text.toString(), etApellido.text.toString())
             mPresenter.guardarAuthor()
         }
     }
@@ -34,7 +34,7 @@ class NewAuthorFragment : Fragment(), NewAuthorFragmentMVP.View{
     }
 
     override fun notificarGuardado() {
-        Toast.makeText(context,"Author ${author?.nombre} ${author?.apellido} Guardado",Toast.LENGTH_LONG).show()
+        Toast.makeText(context, "Author ${author?.nombre} ${author?.apellido} Guardado", Toast.LENGTH_LONG).show()
     }
 
     override fun cargarCamposEnVista() {
@@ -48,7 +48,7 @@ class NewAuthorFragment : Fragment(), NewAuthorFragmentMVP.View{
     }
 
     override fun notificarEncontrado() {
-        Toast.makeText(context,"Author ${author?.nombre} ${author?.apellido} Encontrado",Toast.LENGTH_LONG).show()
+        Toast.makeText(context, "Author ${author?.nombre} ${author?.apellido} Encontrado", Toast.LENGTH_LONG).show()
     }
 
     override fun camposVacios() {
@@ -58,11 +58,11 @@ class NewAuthorFragment : Fragment(), NewAuthorFragmentMVP.View{
     }
 
     override fun mostrarErrorDni() {
-
+        Toast.makeText(context, "Longitud de caracteres incorrecta de DNI", Toast.LENGTH_LONG).show()
     }
 
     override fun mostrarErrorCamposObligatorios() {
-
+        Toast.makeText(context, "Todos los campos son obligatorios", Toast.LENGTH_LONG).show()
     }
 
     override var author: Author? = null
