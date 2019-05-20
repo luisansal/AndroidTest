@@ -18,11 +18,6 @@ class GuardarAuthorPersistenceTest : BaseIntegrationTest() {
         daggerComponent.inject(this)
     }
 
-    @After
-    fun after() {
-        authorRepository.db?.close()
-    }
-
     @Test
     fun `guardar author`() {
         val author = Author("0000001","Luis","Sanchez")

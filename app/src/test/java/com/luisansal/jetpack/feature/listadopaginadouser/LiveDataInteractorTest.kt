@@ -35,8 +35,6 @@ class LiveDataInteractorTest : BaseIntegrationTest() {
     @Mock
     lateinit var listUserFragmentPresenter: ListUserFragmentMVP.Presenter
 
-    lateinit var mContext: Context
-
     @Inject
     lateinit var mInteractor: ListUserFragmentInteractor
 
@@ -46,7 +44,6 @@ class LiveDataInteractorTest : BaseIntegrationTest() {
 
     @Before
     fun setup() {
-        mContext = ApplicationProvider.getApplicationContext<Context>()
         daggerComponent.inject(this)
 
         generateData()

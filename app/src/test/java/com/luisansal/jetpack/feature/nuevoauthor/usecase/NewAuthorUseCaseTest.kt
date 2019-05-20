@@ -21,11 +21,6 @@ class NewAuthorUseCaseTest : BaseIntegrationTest() {
         daggerComponent.inject(this)
     }
 
-    @After
-    fun after() {
-        authorUseCase.db?.close()
-    }
-
     @Test
     fun `guardar author`() {
         val author = Author("0000001","Pedro","Alvarez")

@@ -38,17 +38,12 @@ class LiveDataPresenterTest : BaseIntegrationTest(){
     @Mock
     lateinit var listUserFragmentInteractor: ListUserFragmentMVP.Interactor
 
-    lateinit var mContext: Context
-
     lateinit var presenter: ListUserFragmentPresenter
 
     @Before
     fun setup() {
         //Si vamos a probar el presentador, deberemos inicializarlo y no hacerle mock, solo hacer mock a la vista e interactor.
         presenter = ListUserFragmentPresenter(listUserFragmentView, listUserFragmentInteractor)
-
-        //Instanciamos el contexto, sin Robolectric esto no podría ser posible
-        mContext = ApplicationProvider.getApplicationContext<Context>()
 
         //Guarda los usuarios en la BD
         loadData()
