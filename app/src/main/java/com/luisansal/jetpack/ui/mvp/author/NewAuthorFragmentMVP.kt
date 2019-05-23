@@ -17,6 +17,7 @@ interface NewAuthorFragmentMVP {
         var author : Author?
         var dni : String?
         fun notificarNoEncontrado()
+        fun authorDuplicado(mensaje : String)
     }
 
     interface Presenter{

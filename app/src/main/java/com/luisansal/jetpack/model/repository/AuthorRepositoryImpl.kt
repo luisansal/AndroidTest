@@ -10,6 +10,10 @@ import io.reactivex.Single
 import javax.inject.Inject
 
 class AuthorRepositoryImpl @Inject constructor(mContext: Context) : AuthorRepository {
+    override fun buscarAuthorDuplicadoByDni(dni: String): Author {
+        return mAuthorDao!!.findOneByDni(dni)
+    }
+
     override fun guardarAuthor(author: Author): Completable {
         return Completable.create {
             mAuthorDao!!.save(author)
@@ -23,7 +27,7 @@ class AuthorRepositoryImpl @Inject constructor(mContext: Context) : AuthorReposi
         }
     }
 
-    override var db = MyRoomDatabase.getDatabase(mContext)
+    var db = MyRoomDatabase.getDatabase(mContext)
 
     private var mAuthorDao: AuthorDao? = null
 

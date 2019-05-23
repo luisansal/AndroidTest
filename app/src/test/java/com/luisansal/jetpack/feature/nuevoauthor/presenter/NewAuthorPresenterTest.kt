@@ -1,5 +1,6 @@
 package com.luisansal.jetpack.feature.nuevoauthor.presenter
 
+import com.luisansal.jetpack.common.exception.AuthorDuplicadoException
 import com.luisansal.jetpack.dagger.base.BaseIntegrationTest
 import com.luisansal.jetpack.model.domain.Author
 import com.luisansal.jetpack.ui.mvp.author.NewAuthorFragmentMVP
@@ -7,6 +8,7 @@ import com.luisansal.jetpack.ui.mvp.author.NewAuthorFragmentPresenter
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.mockito.ArgumentMatchers
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.junit.MockitoJUnit
@@ -59,5 +61,21 @@ class NewAuthorPresenterTest : BaseIntegrationTest() {
         newAuthorPresenter.limpiarCampos()
 
         Mockito.verify(mView).camposVacios()
+    }
+
+    @Test
+    fun `verificar author duplicado`(){
+        `guardar author`()
+
+        val author = Author("0000001","Luis","Salazar")
+        Mockito.`when`(mView.author).thenReturn(author)
+
+        newAuthorPresenter.setView(mView)
+        newAuthorPresenter.init()
+
+        newAuthorPresenter.GuardarAuthorObserver().onError(AuthorDuplicadoException(author))
+
+        Mockito.verify(mView).authorDuplicado(ArgumentMatchers.anyString())
+
     }
 }

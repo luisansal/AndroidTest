@@ -1,11 +1,11 @@
 package com.luisansal.jetpack.model.usecase
 
+import com.luisansal.jetpack.common.exception.AuthorDuplicadoException
 import com.luisansal.jetpack.common.executor.PostExecutionThread
 import com.luisansal.jetpack.common.executor.ThreadExecutor
 import com.luisansal.jetpack.model.domain.Author
 import com.luisansal.jetpack.common.observer.BaseCompletableObserver
 import com.luisansal.jetpack.common.observer.BaseSingleObserver
-import com.luisansal.jetpack.model.database.MyRoomDatabase
 import com.luisansal.jetpack.model.repository.interfaces.AuthorRepository
 import com.luisansal.jetpack.model.usecase.interfaces.AuthorUseCase
 import com.luisansal.jetpack.model.usecase.interfaces.UseCase
@@ -18,7 +18,12 @@ class AuthorUseCaseImpl @Inject constructor(private val authorRepository: Author
                                             postExecutionThread: PostExecutionThread) : UseCase(threadExecutor, postExecutionThread)
         , AuthorUseCase {
 
-    override var db: MyRoomDatabase? = authorRepository.db
+    override fun validarAuthorDuplicado(dni: String): Boolean {
+        val author = authorRepository.buscarAuthorDuplicadoByDni(dni)
+        if (author != null)
+            return true
+        return false
+    }
 
     override fun validarDniUsuario(dni: String): Boolean {
         return AuthorValidation.dniCorrecto(dni)
@@ -29,7 +34,10 @@ class AuthorUseCaseImpl @Inject constructor(private val authorRepository: Author
     }
 
     override fun guardarAuthor(author: Author, subscriber: BaseCompletableObserver): Completable {
-        val completable = authorRepository.guardarAuthor(author)
+        var completable = authorRepository.guardarAuthor(author)
+        if (validarAuthorDuplicado(author.dni)) {
+            completable = Completable.error(AuthorDuplicadoException(author))
+        }
         return execute(completable, subscriber)
     }
 

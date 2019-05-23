@@ -1,5 +1,6 @@
 package com.luisansal.jetpack.ui.mvp.author
 
+import com.luisansal.jetpack.common.exception.AuthorDuplicadoException
 import com.luisansal.jetpack.common.observer.BaseCompletableObserver
 import com.luisansal.jetpack.common.observer.BaseSingleObserver
 import com.luisansal.jetpack.model.domain.Author
@@ -21,22 +22,32 @@ class NewAuthorFragmentPresenter @Inject constructor(private val authorUseCase: 
 
     override fun guardarAuthor() {
         mView.author?.let {
-            authorUseCase.guardarAuthor(it, object : BaseCompletableObserver() {
-                override fun onComplete() {
+            authorUseCase.guardarAuthor(it, GuardarAuthorObserver() )
+        }
+    }
 
-                    if (!authorUseCase.comprobarCamposObligatorios(it)) {
-                        mView.mostrarErrorCamposObligatorios()
-                        return
-                    }
-                    if (!authorUseCase.validarDniUsuario(it.dni)) {
-                        mView.mostrarErrorDni()
-                        return
-                    }
+    inner class GuardarAuthorObserver : BaseCompletableObserver() {
+        override fun onComplete() {
 
-                    mView.notificarGuardado()
-
+            mView.author?.let{
+                if (!authorUseCase.comprobarCamposObligatorios(it)) {
+                    mView.mostrarErrorCamposObligatorios()
+                    return
                 }
-            })
+                if (!authorUseCase.validarDniUsuario(it.dni)) {
+                    mView.mostrarErrorDni()
+                    return
+                }
+
+                mView.notificarGuardado()
+            }
+        }
+
+        override fun onError(e: Throwable) {
+            when(e){
+                is AuthorDuplicadoException -> mView.authorDuplicado(e.message.toString())
+            }
+
         }
     }
 
@@ -59,5 +70,4 @@ class NewAuthorFragmentPresenter @Inject constructor(private val authorUseCase: 
         mView.author = Author("", "", "")
         mView.camposVacios()
     }
-
 }

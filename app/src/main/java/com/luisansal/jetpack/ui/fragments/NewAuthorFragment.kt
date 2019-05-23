@@ -91,6 +91,10 @@ class NewAuthorFragment : Fragment(), NewAuthorFragmentMVP.View {
         mPresenter.init()
     }
 
+    override fun authorDuplicado(mensaje : String) {
+        Toast.makeText(context, mensaje, Toast.LENGTH_LONG).show()
+    }
+
     companion object {
 
         var TAG = NewAuthorFragment::class.java.getName()
