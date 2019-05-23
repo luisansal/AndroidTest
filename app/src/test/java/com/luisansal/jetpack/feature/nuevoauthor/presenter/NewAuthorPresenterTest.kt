@@ -73,7 +73,7 @@ class NewAuthorPresenterTest : BaseIntegrationTest() {
         newAuthorPresenter.setView(mView)
         newAuthorPresenter.init()
 
-        newAuthorPresenter.GuardarAuthorObserver().onError(AuthorDuplicadoException(author))
+        newAuthorPresenter.guardarAuthor()
 
         Mockito.verify(mView).authorDuplicado(ArgumentMatchers.anyString())
 

@@ -26,7 +26,7 @@ class NewAuthorFragmentPresenter @Inject constructor(private val authorUseCase: 
         }
     }
 
-    inner class GuardarAuthorObserver : BaseCompletableObserver() {
+    private inner class GuardarAuthorObserver : BaseCompletableObserver() {
         override fun onComplete() {
 
             mView.author?.let{
