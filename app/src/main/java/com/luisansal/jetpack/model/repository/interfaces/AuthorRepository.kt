@@ -7,7 +7,9 @@ import io.reactivex.Single
 interface AuthorRepository {
 
     fun guardarAuthor(author: Author) : Completable
+    fun guardarAuthors(authors: List<Author>) : Completable
     fun buscarAuthorByDni(dni : String) : Single<Author>
     fun buscarAuthorDuplicadoByDni(dni : String) : Author?
+    fun todosAuthors() : Single<List<Author>>
 
 }

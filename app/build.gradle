@@ -4,6 +4,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
 android {
+    def config = rootProject.extensions.getByName("ext")
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.luisansal.jetpack"
@@ -23,6 +24,59 @@ android {
         sourceCompatibility = '1.8'
         targetCompatibility = '1.8'
     }
+    signingConfigs {
+        def env = new Properties()
+
+        if (rootProject.file("env.properties").exists())
+            env.load(new FileInputStream(rootProject.file("env.properties")))
+
+        ci {
+            storeFile rootProject.file(env["store.file"])
+            storePassword env["key.store.password"]
+            keyAlias env["key.store.alias"]
+            keyPassword env["key.password"]
+        }
+    }
+    buildTypes {
+        def date = new Date().format('yyyyMMdd')
+
+        develop {
+            debuggable !config["isCiServer"]
+            shrinkResources false
+            minifyEnabled false
+            signingConfig signingConfigs.ci
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            if (!config["isCiServer"]) {
+                testCoverageEnabled true
+                applicationIdSuffix '.develop'
+                versionNameSuffix "-nb.${date}"
+                manifestPlaceholders = [build_prefix: "Develop "]
+            } else {
+                manifestPlaceholders = [build_prefix: ""]
+            }
+
+            buildConfigField 'String', 'HOST', '"https://api.myjson.com/"'
+        }
+
+        review {
+            debuggable true
+            shrinkResources false
+            minifyEnabled false
+            signingConfig signingConfigs.ci
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            if (!config["isCiServer"]) {
+                testCoverageEnabled true
+                applicationIdSuffix '.review'
+                versionNameSuffix "-nb.${date}"
+            }
+
+            manifestPlaceholders = [build_prefix: "Review "]
+
+            buildConfigField 'String', 'HOST', '"https://api.myjson.com/"'
+        }
+    }
     testOptions {
         unitTests {
             includeAndroidResources = true
@@ -32,6 +86,7 @@ android {
 
 project.ext {
     daggerVersion = "2.21"
+    kluent_version = "+"
 }
 
 dependencies {
@@ -49,6 +104,7 @@ dependencies {
     def paging_version = "2.1.0"
     def kotlin_version = "1.3.21"
     def anko_version = "0.10.5"
+
 
     // ViewModel and LiveData
     // Lifecycle components
@@ -146,6 +202,25 @@ dependencies {
     // kotlin
 //    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 //    implementation "org.jetbrains.anko:anko:$anko_version"
+
+    testImplementation "org.amshove.kluent:kluent-android:$project.kluent_version"
+
+    //Coroutines android
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.2.1"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.2.1"
+
+    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.2.1'
+
+    //Okhttp
+    implementation 'com.squareup.okhttp3:okhttp:3.10.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.9.1'
+
+    //Retrofit
+    implementation "com.squareup.retrofit2:retrofit:2.3.0"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:2.3.0"
+    implementation "com.squareup.retrofit2:converter-gson:2.3.0"
+
+    implementation "io.reactivex.rxjava2:rxandroid:2.0.1"
 }
 repositories {
     mavenCentral()

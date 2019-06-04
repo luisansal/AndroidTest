@@ -10,6 +10,20 @@ import io.reactivex.Single
 import javax.inject.Inject
 
 class AuthorRepositoryImpl @Inject constructor(mContext: Context) : AuthorRepository {
+
+    override fun todosAuthors(): Single<List<Author>> {
+        return Single.create {
+            it.onSuccess(mAuthorDao!!.findAllAuthors())
+        }
+    }
+
+    override fun guardarAuthors(authors: List<Author>): Completable {
+        return Completable.create {
+            mAuthorDao!!.saveAll(authors)
+            it.onComplete()
+        }
+    }
+
     override fun buscarAuthorDuplicadoByDni(dni: String): Author {
         return mAuthorDao!!.findOneByDni(dni)
     }

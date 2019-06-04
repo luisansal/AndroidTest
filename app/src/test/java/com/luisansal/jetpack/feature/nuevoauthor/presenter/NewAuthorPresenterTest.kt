@@ -1,10 +1,12 @@
 package com.luisansal.jetpack.feature.nuevoauthor.presenter
 
-import com.luisansal.jetpack.common.exception.AuthorDuplicadoException
 import com.luisansal.jetpack.dagger.base.BaseIntegrationTest
 import com.luisansal.jetpack.model.domain.Author
 import com.luisansal.jetpack.ui.mvp.author.NewAuthorFragmentMVP
 import com.luisansal.jetpack.ui.mvp.author.NewAuthorFragmentPresenter
+import com.nhaarman.mockitokotlin2.verify
+import junit.framework.Assert.assertEquals
+import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -20,62 +22,84 @@ class NewAuthorPresenterTest : BaseIntegrationTest() {
     val mockitoRule = MockitoJUnit.rule()
 
     @Inject
-    lateinit var newAuthorPresenter : NewAuthorFragmentPresenter
+    lateinit var newAuthorPresenter: NewAuthorFragmentPresenter
 
     @Mock
-    lateinit var mView : NewAuthorFragmentMVP.View
+    lateinit var mView: NewAuthorFragmentMVP.View
 
     @Before
-    fun setup(){
+    fun setup() {
         daggerComponent.inject(this)
+        newAuthorPresenter.setView(mView)
     }
 
     @Test
-    fun `guardar author`(){
-        val author = Author("0000001","Luis","Salazar")
+    fun `guardar author`() {
+        val author = Author("0000001", "Luis", "Salazar")
         Mockito.`when`(mView.author).thenReturn(author)
 
-        newAuthorPresenter.setView(mView)
         newAuthorPresenter.guardarAuthor()
 
         Mockito.verify(mView).notificarGuardado()
     }
 
     @Test
-    fun `encontrar author`(){
+    fun `encontrar author`() {
         `guardar author`()
 
         val dni = "0000001"
         Mockito.`when`(mView.dni).thenReturn(dni)
 
-        newAuthorPresenter.setView(mView)
         newAuthorPresenter.buscarAuthor()
 
         Mockito.verify(mView).authorEncontrado()
     }
 
     @Test
-    fun `verificar que se limpien los campos`(){
+    fun `verificar que se limpien los campos`() {
 
-        newAuthorPresenter.setView(mView)
         newAuthorPresenter.limpiarCampos()
 
         Mockito.verify(mView).camposVacios()
     }
 
     @Test
-    fun `verificar author duplicado`(){
+    fun `verificar author duplicado`() {
         `guardar author`()
 
-        val author = Author("0000001","Luis","Salazar")
+        val author = Author("0000001", "Luis", "Salazar")
         Mockito.`when`(mView.author).thenReturn(author)
-
-        newAuthorPresenter.setView(mView)
-        newAuthorPresenter.init()
 
         newAuthorPresenter.guardarAuthor()
 
         Mockito.verify(mView).authorDuplicado(ArgumentMatchers.anyString())
 
+    }
+
+    @Test
+    fun `contador corutinas`() {
+        val expected = 0
+        val result = runBlocking {
+            contadorHastaCero(10)
+        }
+        assertEquals(expected, result)
+    }
+
+    suspend fun contadorHastaCero(num : Int) : Int {
+        var result = 0
+        // Will be launched in the mainThreadSurrogate dispatcher
+        for (i in num downTo 0) {
+            waitUiThread(1000)
+            result = i
+        }
+        return result
+    }
+
+    @Test
+    fun `mostrar authors`(){
+
+        newAuthorPresenter.mostrarAuthors()
+
+        verify(mView).mostrarAuthors(ArgumentMatchers.anyList())
     }
 }

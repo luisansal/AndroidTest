@@ -1,13 +1,34 @@
 package com.luisansal.jetpack.ui.mvp.author
 
 import com.luisansal.jetpack.common.exception.AuthorDuplicadoException
+import com.luisansal.jetpack.common.executor.PostExecutionThread
+import com.luisansal.jetpack.common.executor.ThreadExecutor
 import com.luisansal.jetpack.common.observer.BaseCompletableObserver
 import com.luisansal.jetpack.common.observer.BaseSingleObserver
+import com.luisansal.jetpack.model.api.AuthorApi
 import com.luisansal.jetpack.model.domain.Author
 import com.luisansal.jetpack.model.usecase.interfaces.AuthorUseCase
+import com.luisansal.jetpack.model.usecase.interfaces.UseCase
 import javax.inject.Inject
 
-class NewAuthorFragmentPresenter @Inject constructor(private val authorUseCase: AuthorUseCase) : NewAuthorFragmentMVP.Presenter {
+class NewAuthorFragmentPresenter @Inject constructor(private val authorUseCase: AuthorUseCase, private val authorApi: AuthorApi, threadExecutor: ThreadExecutor, postExecutionThread: PostExecutionThread) : UseCase(threadExecutor, postExecutionThread), NewAuthorFragmentMVP.Presenter {
+
+    override fun mostrarAuthors() {
+        authorUseCase.obtenerTodosAuthors(object : BaseSingleObserver<List<Author>>() {
+            override fun onSuccess(t: List<Author>) {
+                mView.mostrarAuthors(t)
+            }
+        })
+    }
+
+    override fun restringirGuardadoEnNSegundos(): Boolean {
+        mView.seconds?.let { seconds ->
+            if (seconds > 0) {
+                return false
+            }
+        }
+        return true
+    }
 
     lateinit var mView: NewAuthorFragmentMVP.View
 
@@ -18,18 +39,25 @@ class NewAuthorFragmentPresenter @Inject constructor(private val authorUseCase: 
     override fun init() {
         mView.onClickBtnGuardar()
         mView.onClickBtnBuscar()
+        mView.onClickBtnMostrar()
+        mView.contadorNSegundos(40)
+        mView.setupAdapterAuthors()
     }
 
     override fun guardarAuthor() {
-        mView.author?.let {
-            authorUseCase.guardarAuthor(it, GuardarAuthorObserver() )
+        if (restringirGuardadoEnNSegundos()) {
+            mView.notificarRestriccionNSegundos()
+        } else {
+            mView.author?.let {
+                authorUseCase.guardarAuthor(it, GuardarAuthorObserver())
+            }
         }
     }
 
     private inner class GuardarAuthorObserver : BaseCompletableObserver() {
         override fun onComplete() {
 
-            mView.author?.let{
+            mView.author?.let {
                 if (!authorUseCase.comprobarCamposObligatorios(it)) {
                     mView.mostrarErrorCamposObligatorios()
                     return
@@ -44,7 +72,7 @@ class NewAuthorFragmentPresenter @Inject constructor(private val authorUseCase: 
         }
 
         override fun onError(e: Throwable) {
-            when(e){
+            when (e) {
                 is AuthorDuplicadoException -> mView.authorDuplicado(e.message.toString())
             }
 

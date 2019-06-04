@@ -13,6 +13,7 @@ import dagger.android.support.AndroidSupportInjectionModule
     AppBindingModule::class,
     ThreadExecutorModule::class,
     BuildersModule::class,
+    ApiRestModule::class,
     AndroidSupportInjectionModule::class
 ])
 interface AppComponent {

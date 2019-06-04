@@ -18,7 +18,7 @@ abstract class UseCase protected constructor
     private val disposables: CompositeDisposable = CompositeDisposable()
 
     internal inline fun <reified T> execute(
-            observable: Observable<T>, observer: DisposableObserver<T>) {
+            observable: Observable<T>, observer: DisposableObserver<T>) : Observable<T>{
         Preconditions.checkNotNull(observer)
         val disposable = observable
 
@@ -26,6 +26,7 @@ abstract class UseCase protected constructor
                 .observeOn(postExecutionThread.scheduler)
                 .subscribeWith(observer)
         addDisposable(disposable)
+        return observable
     }
 
     internal inline fun <reified T> execute(

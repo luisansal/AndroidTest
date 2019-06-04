@@ -7,6 +7,7 @@ interface NewAuthorFragmentMVP {
     interface View{
         fun onClickBtnGuardar()
         fun onClickBtnBuscar()
+        fun onClickBtnMostrar()
         fun notificarGuardado()
         fun cargarCamposEnVista()
         fun authorEncontrado()
@@ -16,8 +17,14 @@ interface NewAuthorFragmentMVP {
         fun mostrarErrorCamposObligatorios()
         var author : Author?
         var dni : String?
+        var seconds : Int?
         fun notificarNoEncontrado()
         fun authorDuplicado(mensaje : String)
+        fun contadorNSegundos(n : Int)
+        fun notificarRestriccionNSegundos()
+        fun setupAdapterAuthors()
+        fun mostrarAuthors(authors: List<Author>)
+        fun ocultarcontador()
     }
 
     interface Presenter{
@@ -26,6 +33,8 @@ interface NewAuthorFragmentMVP {
         fun guardarAuthor()
         fun buscarAuthor()
         fun limpiarCampos()
+        fun restringirGuardadoEnNSegundos() : Boolean
+        fun mostrarAuthors()
     }
 
 }

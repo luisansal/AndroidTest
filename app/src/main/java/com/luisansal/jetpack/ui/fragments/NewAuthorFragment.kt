@@ -6,15 +6,91 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.luisansal.jetpack.R
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.luisansal.jetpack.model.domain.Author
 import com.luisansal.jetpack.ui.mvp.author.NewAuthorFragmentMVP
 import com.luisansal.jetpack.ui.mvp.author.NewAuthorFragmentPresenter
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_new_author.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import javax.inject.Inject
+import android.widget.TextView
+import com.luisansal.jetpack.R
+import kotlinx.android.synthetic.main.author_list_row.view.*
+
 
 class NewAuthorFragment : Fragment(), NewAuthorFragmentMVP.View {
+    override fun ocultarcontador() {
+        tvContador.visibility = View.GONE
+    }
+
+    override fun onClickBtnMostrar() {
+        btnMostrarAuthors.setOnClickListener {
+            mPresenter.mostrarAuthors()
+        }
+    }
+
+    inner class AuthorAdapter(private val authors: List<Author>) : RecyclerView.Adapter<AuthorAdapter.ViewHolder>() {
+
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+            val v = LayoutInflater.from(parent.context).inflate(R.layout.author_list_row, parent, false)
+            return ViewHolder(v)
+        }
+
+        override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+            val dni = authors.get(position).dni
+            val name = authors.get(position).nombre
+            holder.dni.setText(dni)
+            holder.fullName.setText(name)
+        }
+
+        override fun getItemCount(): Int {
+            return authors.size
+        }
+
+        inner class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
+            val dni: TextView
+            val fullName: TextView
+
+            init {
+                dni = v.tvDni
+                fullName = v.tvNombreCompleto
+            }
+        }
+    }
+
+    override fun mostrarAuthors(authors: List<Author>) {
+        rvAuthors.adapter = AuthorAdapter(authors)
+    }
+
+    override fun setupAdapterAuthors() {
+        rvAuthors.layoutManager = LinearLayoutManager(context)
+        rvAuthors.setHasFixedSize(true)
+    }
+
+    override var seconds: Int? = null
+
+    override fun contadorNSegundos(n: Int) {
+        GlobalScope.launch(Dispatchers.Main) {
+            for (i in n downTo 0) { // countdown from 10 to 1
+                delay(1000)
+                tvContador.text = i.toString()
+                seconds = i
+                if (seconds == 0) {
+                    notificarRestriccionNSegundos()
+                    ocultarcontador()
+                }
+            }
+        }
+    }
+
+    override fun notificarRestriccionNSegundos() {
+        Toast.makeText(context, "Usted se ha excedido del tiempo maximo para guardar", Toast.LENGTH_LONG).show()
+    }
 
     @Inject
     lateinit var mPresenter: NewAuthorFragmentPresenter
@@ -35,7 +111,7 @@ class NewAuthorFragment : Fragment(), NewAuthorFragmentMVP.View {
 
     override fun notificarGuardado() {
         Toast.makeText(context, "Author ${author?.nombre} ${author?.apellido} Guardado", Toast.LENGTH_LONG).show()
-        author = Author("","","")
+        author = Author("", "", "")
         camposVacios()
     }
 
@@ -91,7 +167,7 @@ class NewAuthorFragment : Fragment(), NewAuthorFragmentMVP.View {
         mPresenter.init()
     }
 
-    override fun authorDuplicado(mensaje : String) {
+    override fun authorDuplicado(mensaje: String) {
         Toast.makeText(context, mensaje, Toast.LENGTH_LONG).show()
     }
 

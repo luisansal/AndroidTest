@@ -87,7 +87,7 @@ class MainActivity : AppCompatActivity(), ActionsViewPagerListener, MainActivity
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        (application as MyApplication).getAppComponent().inject(this)
+        //Iniciando inyeccion de dependencias
         AndroidInjection.inject(this)
         setContentView(R.layout.activity_main)
         mViewPager = findViewById(R.id.pager)

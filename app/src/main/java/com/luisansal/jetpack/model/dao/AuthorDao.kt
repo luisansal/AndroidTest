@@ -11,7 +11,12 @@ interface AuthorDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun save(author: Author): Long
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun saveAll(authors: List<Author>)
 
     @Query("SELECT * from tblauthor where dni = :dni")
     fun findOneByDni(dni: String): Author
+
+    @Query("SELECT * from tblauthor")
+    fun findAllAuthors(): List<Author>
 }

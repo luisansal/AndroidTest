@@ -1,5 +1,6 @@
 package com.luisansal.jetpack.di
 
+import com.luisansal.jetpack.LoginActivity
 import com.luisansal.jetpack.MainActivity
 import com.luisansal.jetpack.ui.fragments.ListUserFragment
 import com.luisansal.jetpack.ui.fragments.NewAuthorFragment
@@ -16,6 +17,9 @@ abstract class BuildersModule {
 
     @ContributesAndroidInjector(modules = [])
     abstract fun bindActivity(): MainActivity
+
+    @ContributesAndroidInjector(modules = [])
+    abstract fun bindLoginActivity(): LoginActivity
 
     @ContributesAndroidInjector(modules = [FragmentBindModule::class])
     abstract fun bindNewUserFragment(): NewUserFragment

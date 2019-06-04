@@ -18,7 +18,7 @@ import org.robolectric.shadows.ShadowLooper
 @Ignore
 @RunWith(RobolectricTestRunner::class)
 @Config(application = AppTest::class, sdk = [27])
-abstract class BaseIntegrationTest {
+abstract class BaseIntegrationTest : CoroutineIntegrationTest() {
 
     lateinit var daggerComponent : AppComponentTest
 

@@ -6,6 +6,7 @@ import com.luisansal.jetpack.common.executor.ThreadExecutor
 import com.luisansal.jetpack.model.domain.Author
 import com.luisansal.jetpack.common.observer.BaseCompletableObserver
 import com.luisansal.jetpack.common.observer.BaseSingleObserver
+import com.luisansal.jetpack.model.repository.interfaces.AuthorCloudRepository
 import com.luisansal.jetpack.model.repository.interfaces.AuthorRepository
 import com.luisansal.jetpack.model.usecase.interfaces.AuthorUseCase
 import com.luisansal.jetpack.model.usecase.interfaces.UseCase
@@ -15,8 +16,24 @@ import io.reactivex.Single
 import javax.inject.Inject
 
 class AuthorUseCaseImpl @Inject constructor(private val authorRepository: AuthorRepository, threadExecutor: ThreadExecutor,
+                                            private val authorCloudRepository: AuthorCloudRepository,
                                             postExecutionThread: PostExecutionThread) : UseCase(threadExecutor, postExecutionThread)
         , AuthorUseCase {
+
+    override fun obtenerTodosAuthors(subscriber: BaseSingleObserver<List<Author>>): Single<List<Author>> {
+        val single = authorRepository.todosAuthors()
+        return execute(single, subscriber)
+    }
+
+    override fun guardarAuthorsEnLocal() {
+        val single = authorCloudRepository.getAuthors()
+
+        execute(single, object : BaseSingleObserver<List<Author>>(){
+            override fun onSuccess(t: List<Author>) {
+                execute(authorRepository.guardarAuthors(t),BaseCompletableObserver())
+            }
+        })
+    }
 
     override fun validarAuthorDuplicado(dni: String): Boolean {
         val author = authorRepository.buscarAuthorDuplicadoByDni(dni)
