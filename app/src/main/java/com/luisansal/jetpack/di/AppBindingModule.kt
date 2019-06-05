@@ -2,6 +2,7 @@ package com.luisansal.jetpack.di
 
 import com.luisansal.jetpack.model.repository.AuthorCloudRepositoryImpl
 import com.luisansal.jetpack.model.repository.AuthorRepositoryImpl
+import com.luisansal.jetpack.model.repository.LoginCloudRepositoryImpl
 import com.luisansal.jetpack.model.repository.interfaces.AuthorCloudRepository
 import com.luisansal.jetpack.model.repository.interfaces.AuthorRepository
 import com.luisansal.jetpack.model.repository.interfaces.LoginCloudRepository
@@ -28,5 +29,5 @@ abstract class AppBindingModule {
     abstract fun provideUserCloudRepository(authorCloudRepositoryImpl: AuthorCloudRepositoryImpl): AuthorCloudRepository
 
     @Binds
-    abstract fun provideLoginCloudRepository(loginCloudRepositoryImpl: AuthorCloudRepositoryImpl): LoginCloudRepository
+    abstract fun provideLoginCloudRepository(loginCloudRepositoryImpl: LoginCloudRepositoryImpl): LoginCloudRepository
 }

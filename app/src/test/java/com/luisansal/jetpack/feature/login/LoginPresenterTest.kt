@@ -4,12 +4,12 @@ import com.luisansal.jetpack.dagger.base.BaseIntegrationTest
 import com.luisansal.jetpack.model.domain.Login
 import com.luisansal.jetpack.ui.mvp.login.LoginActivityMVP
 import com.luisansal.jetpack.ui.mvp.login.LoginActivityPresenter
-import com.nhaarman.mockitokotlin2.verify
-import com.nhaarman.mockitokotlin2.whenever
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mock
+import org.mockito.Mockito.`when`
+import org.mockito.Mockito.verify
 import org.mockito.junit.MockitoJUnit
 import javax.inject.Inject
 
@@ -35,7 +35,7 @@ class LoginPresenterTest : BaseIntegrationTest()  {
 
         val login = Login("luisansal","12345678")
 
-        whenever(mView.login).thenReturn(login)
+        `when`(mView.login).thenReturn(login)
 
         mPresenter.validarLogin()
 
