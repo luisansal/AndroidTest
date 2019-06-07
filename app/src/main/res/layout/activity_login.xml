@@ -13,7 +13,7 @@
         android:layout_marginTop="84dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Usuario"
+        android:hint="Usuario"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -24,8 +24,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="184dp"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Contrasena"
+        android:inputType="textPassword"
+        android:hint="Contrasena"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

@@ -8,6 +8,7 @@ interface LoginActivityMVP {
         var login : Login?
         fun mensajeLoginCorrecto()
         fun mensajeLoginIncorrecto()
+        fun entrarPantallaPrincipal()
     }
 
     interface Presenter {

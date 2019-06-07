@@ -7,8 +7,10 @@ import com.luisansal.jetpack.model.repository.interfaces.AuthorCloudRepository
 import com.luisansal.jetpack.model.repository.interfaces.AuthorRepository
 import com.luisansal.jetpack.model.repository.interfaces.LoginCloudRepository
 import com.luisansal.jetpack.model.usecase.AuthorUseCaseImpl
+import com.luisansal.jetpack.model.usecase.LoginUseCaseImpl
 import com.luisansal.jetpack.model.usecase.UserUseCaseImpl
 import com.luisansal.jetpack.model.usecase.interfaces.AuthorUseCase
+import com.luisansal.jetpack.model.usecase.interfaces.LoginUseCase
 import com.luisansal.jetpack.model.usecase.interfaces.UserUseCase
 import dagger.Binds
 import dagger.Module
@@ -21,6 +23,9 @@ abstract class AppBindingModule {
 
     @Binds
     abstract fun provideAuthorUseCase(authorUseCaseImpl: AuthorUseCaseImpl): AuthorUseCase
+
+    @Binds
+    abstract fun provideLoginUseCase(loginUseCaseImpl: LoginUseCaseImpl): LoginUseCase
 
     @Binds
     abstract fun provideUserRepository(authorRepositoryImpl: AuthorRepositoryImpl): AuthorRepository

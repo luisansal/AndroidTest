@@ -4,8 +4,9 @@ import com.luisansal.jetpack.di.*
 import com.luisansal.jetpack.feature.nuevoauthor.persistencia.GuardarAuthorPersistenceTest
 import com.luisansal.jetpack.feature.listadopaginadouser.LiveDataInteractorTest
 import com.luisansal.jetpack.feature.listadopaginadouser.LiveDataPresenterTest
-import com.luisansal.jetpack.feature.login.LoginPresenterTest
+import com.luisansal.jetpack.feature.login.presenter.LoginPresenterTest
 import com.luisansal.jetpack.feature.nuevoauthor.api.AuthorApiTest
+import com.luisansal.jetpack.feature.nuevoauthor.api.LoginApiTest
 import com.luisansal.jetpack.feature.nuevoauthor.presenter.NewAuthorPresenterTest
 import com.luisansal.jetpack.feature.nuevoauthor.usecase.NewAuthorUseCaseTest
 import com.luisansal.jetpack.model.MyApplication
@@ -42,5 +43,6 @@ interface AppComponentTest : AppComponent {
     fun inject(testToInject: NewAuthorPresenterTest)
     fun inject(testToInject: NewAuthorUseCaseTest)
     fun inject(testToInject: AuthorApiTest)
+    fun inject(testToInject: LoginApiTest)
     fun inject(testToInject: LoginPresenterTest)
 }

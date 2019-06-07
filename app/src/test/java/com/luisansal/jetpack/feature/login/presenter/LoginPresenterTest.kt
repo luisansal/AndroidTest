@@ -1,4 +1,4 @@
-package com.luisansal.jetpack.feature.login
+package com.luisansal.jetpack.feature.login.presenter
 
 import com.luisansal.jetpack.dagger.base.BaseIntegrationTest
 import com.luisansal.jetpack.model.domain.Login

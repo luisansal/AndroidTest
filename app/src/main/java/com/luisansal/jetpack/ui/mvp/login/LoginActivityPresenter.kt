@@ -1,25 +1,42 @@
 package com.luisansal.jetpack.ui.mvp.login
 
+import com.luisansal.jetpack.common.observer.BaseSingleObserver
+import com.luisansal.jetpack.model.domain.Login
+import com.luisansal.jetpack.model.usecase.interfaces.LoginUseCase
 import javax.inject.Inject
 
-class LoginActivityPresenter @Inject constructor() : LoginActivityMVP.Presenter {
+class LoginActivityPresenter @Inject constructor(private val loginUseCase: LoginUseCase) : LoginActivityMVP.Presenter {
+
+    lateinit var mView: LoginActivityMVP.View
+
     override fun setView(view: LoginActivityMVP.View) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        mView = view
     }
 
     override fun init() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        mView.onClickBtnLogin()
     }
 
     override fun validarLogin() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        mView.login?.let {
+            loginUseCase.login(it.usr, it.pwd, object : BaseSingleObserver<Login>() {
+                override fun onSuccess(t: Login) {
+                   onLoginCorrecto()
+                }
+
+                override fun onError(e: Throwable) {
+                  onLoginIncorrecto()
+                }
+            })
+        }
     }
 
     override fun onLoginCorrecto() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        mView.mensajeLoginCorrecto()
+        mView.entrarPantallaPrincipal()
     }
 
     override fun onLoginIncorrecto() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        mView.mensajeLoginIncorrecto()
     }
 }
