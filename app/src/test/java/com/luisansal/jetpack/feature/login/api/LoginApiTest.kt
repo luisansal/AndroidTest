@@ -27,7 +27,7 @@ class LoginApiTest : BaseIntegrationTest() {
         loginApiTest.awaitTerminalEvent()
 
         loginApiTest.assertNoErrors().assertValue {
-            it.resultado.usr.equals(usr) && it.resultado.pwd.equals(pwd)
+            it.resultado.usr.equals(usr) && it.resultado.pwd.equals(pwd) && it.httpStatus == 200
         }
     }
 }
