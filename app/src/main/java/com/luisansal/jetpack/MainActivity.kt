@@ -24,27 +24,20 @@ import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), ActionsViewPagerListener, MainActivityMVP.View {
 
-
-    override var fragmentName: String?
-        get() {
-            return MainActivity.fragmentName
-        }
-        set(value) {
-            MainActivity.fragmentName = value
-        }
+    override var fragmentName: String? = null
 
     @Inject
     lateinit var userRepository: UserRepository
 
-    private var mViewPager: ViewPager? = null
+    private lateinit var mViewPager: ViewPager
     private var actionBar: ActionBar? = null
-    private var tabListener: ActionBar.TabListener? = null
+    private lateinit var tabListener: ActionBar.TabListener
 
     override fun setupTabListener() {
         tabListener = object : ActionBar.TabListener {
             override fun onTabSelected(tab: ActionBar.Tab, ft: FragmentTransaction) {
                 // show the given tab
-                mViewPager!!.currentItem = tab.position
+                mViewPager.currentItem = tab.position
             }
 
             override fun onTabUnselected(tab: ActionBar.Tab, ft: FragmentTransaction) {
@@ -59,21 +52,14 @@ class MainActivity : AppCompatActivity(), ActionsViewPagerListener, MainActivity
 
     override fun setupViewPager(fragments: ArrayList<Fragment>) {
 
-        val mDemoCollectionPagerAdapter = MyPagerAdapter(
-                supportFragmentManager, fragments)
+        val mDemoCollectionPagerAdapter = MyPagerAdapter(supportFragmentManager, fragments)
 
-
-        mViewPager!!.adapter = mDemoCollectionPagerAdapter
-        mViewPager!!.setOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {
-            override fun onPageSelected(position: Int) {
-                actionBar!!.setSelectedNavigationItem(position)
-            }
-        })
+        mViewPager.adapter = mDemoCollectionPagerAdapter
     }
 
     override fun setupActionBar(fragments: ArrayList<Fragment>) {
         actionBar = supportActionBar
-        actionBar!!.navigationMode = ActionBar.NAVIGATION_MODE_TABS
+        actionBar?.navigationMode = ActionBar.NAVIGATION_MODE_TABS
 
         // Add 3 tabs, specifying the tab's text and TabListener
         for (i in fragments.indices) {
@@ -96,9 +82,9 @@ class MainActivity : AppCompatActivity(), ActionsViewPagerListener, MainActivity
     }
 
     override fun onNext() {
-        val position = mViewPager!!.currentItem
-        mViewPager!!.currentItem = position + 1
-        actionBar!!.setSelectedNavigationItem(position + 1)
+        val position = mViewPager?.currentItem
+        mViewPager.currentItem = position + 1
+        actionBar?.setSelectedNavigationItem(position + 1)
     }
 
     override fun onBackPressed() {
@@ -117,9 +103,5 @@ class MainActivity : AppCompatActivity(), ActionsViewPagerListener, MainActivity
             Log.i("MainActivity", "nothing on backstack, calling super")
             super.onBackPressed()
         }
-    }
-
-    companion object {
-        var fragmentName: String? = null
     }
 }

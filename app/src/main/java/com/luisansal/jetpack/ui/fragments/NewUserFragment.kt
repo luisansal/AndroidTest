@@ -22,7 +22,7 @@ import javax.inject.Inject
 class NewUserFragment : Fragment(), NewUserFragmentMVP.View {
     override var user: User? = null
 
-    override var crudListener: CrudListener<User> ? = null
+    override var crudListener: CrudListener<User>? = null
 
     @Inject
     lateinit var mPresenter: NewUserFragmentPresenter
@@ -60,16 +60,16 @@ class NewUserFragment : Fragment(), NewUserFragmentMVP.View {
     }
 
     override fun nextPage() {
-        mActivityListener!!.onNext()
+        mActivityListener?.onNext()
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        try{
+        try {
             mActivityListener = context as ActionsViewPagerListener
-        } catch (e : Exception) {
+        } catch (e: Exception) {
             throw RuntimeException(context.toString()
-                    + " must implement " + mActivityListener!!.javaClass.getSimpleName())
+                    + " must implement " + mActivityListener?.javaClass?.getSimpleName())
         }
     }
 
@@ -80,13 +80,13 @@ class NewUserFragment : Fragment(), NewUserFragmentMVP.View {
 
     override fun onClickBtnSiguiente() {
         btnSiguiente.setOnClickListener {
-            user = User(etDni.text.toString(),etNombre.text.toString(),etApellido.text.toString())
+            user = User(etDni.text.toString(), etNombre.text.toString(), etApellido.text.toString())
             mPresenter.onClickBtnSiguiente(user!!)
         }
     }
 
     override fun onTextDniChanged() {
-        etDni.addTextChangedListener(object: TextWatcher{
+        etDni.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
 
             }
@@ -110,7 +110,6 @@ class NewUserFragment : Fragment(), NewUserFragmentMVP.View {
 
         var TAG = NewUserFragment::class.java.getName()
 
-        // TODO: Rename and change types and number of parameters
         fun newInstance(crudListener: CrudListener<User>): NewUserFragment {
             val fragment = NewUserFragment()
             val args = Bundle()

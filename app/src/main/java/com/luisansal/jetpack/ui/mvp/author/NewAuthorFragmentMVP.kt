@@ -8,6 +8,7 @@ interface NewAuthorFragmentMVP {
         fun onClickBtnGuardar()
         fun onClickBtnBuscar()
         fun onClickBtnMostrar()
+        fun onTextChangedDni()
         fun notificarGuardado()
         fun cargarCamposEnVista()
         fun authorEncontrado()
@@ -18,6 +19,7 @@ interface NewAuthorFragmentMVP {
         var author : Author?
         var dni : String?
         var seconds : Int?
+        var authorNoEncontradoVarias : Boolean
         fun notificarNoEncontrado()
         fun authorDuplicado(mensaje : String)
         fun contadorNSegundos(n : Int)

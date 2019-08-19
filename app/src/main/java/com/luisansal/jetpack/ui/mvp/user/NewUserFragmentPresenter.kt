@@ -38,10 +38,6 @@ class NewUserFragmentPresenter @Inject constructor(private val userUseCase: User
         mView.crudListener?.oBject?.let { userUseCase.saveUser(it, SaveUserSubscriber()) }
     }
 
-    override fun goToNextPage() {
-
-    }
-
     private inner class TextChangedSubscriber : BaseSingleObserver<User>() {
         override fun onSuccess(t: User) {
             mView.crudListener?.oBject = t

@@ -21,6 +21,5 @@ interface NewUserFragmentMVP {
         fun onClickBtnSiguiente(user: User)
         fun onTextDniChanged(texto : String)
         fun saveUser()
-        fun goToNextPage()
     }
 }

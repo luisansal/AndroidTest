@@ -1,6 +1,9 @@
 package com.luisansal.jetpack.ui.fragments
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,6 +27,28 @@ import kotlinx.android.synthetic.main.author_list_row.view.*
 
 
 class NewAuthorFragment : Fragment(), NewAuthorFragmentMVP.View {
+
+    override var authorNoEncontradoVarias: Boolean = true
+
+    override fun onTextChangedDni() {
+        etDni.onTextChangedListener { charSequence: CharSequence?, start: Int, before: Int, count: Int ->
+            authorNoEncontradoVarias = false
+            dni = charSequence.toString()
+            mPresenter.buscarAuthor()
+        }
+    }
+
+    fun TextView.onTextChangedListener(listener: (p0: CharSequence?, start: Int, before: Int, count: Int) -> Unit) =
+            this.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {}
+                override fun beforeTextChanged(charSequence: CharSequence?, start: Int, before: Int, count: Int) {}
+
+                override fun onTextChanged(charSequence: CharSequence?, start: Int, before: Int, count: Int) {
+                    listener(charSequence, start, before, count)
+                }
+            })
+
+
     override fun ocultarcontador() {
         tvContador.visibility = View.GONE
     }
@@ -80,7 +105,7 @@ class NewAuthorFragment : Fragment(), NewAuthorFragmentMVP.View {
                 delay(1000)
                 tvContador.text = i.toString()
                 seconds = i
-                if (seconds == 0) {
+                if (mPresenter.restringirGuardadoEnNSegundos()) {
                     notificarRestriccionNSegundos()
                     ocultarcontador()
                 }
@@ -104,6 +129,7 @@ class NewAuthorFragment : Fragment(), NewAuthorFragmentMVP.View {
 
     override fun onClickBtnBuscar() {
         btnBuscar.setOnClickListener {
+            authorNoEncontradoVarias = true
             dni = etDni.text.toString()
             mPresenter.buscarAuthor()
         }

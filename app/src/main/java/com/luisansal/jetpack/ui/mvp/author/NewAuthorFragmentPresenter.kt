@@ -11,7 +11,8 @@ import com.luisansal.jetpack.model.usecase.interfaces.AuthorUseCase
 import com.luisansal.jetpack.model.usecase.interfaces.UseCase
 import javax.inject.Inject
 
-class NewAuthorFragmentPresenter @Inject constructor(private val authorUseCase: AuthorUseCase, private val authorApi: AuthorApi, threadExecutor: ThreadExecutor, postExecutionThread: PostExecutionThread) : UseCase(threadExecutor, postExecutionThread), NewAuthorFragmentMVP.Presenter {
+class NewAuthorFragmentPresenter @Inject constructor(private val authorUseCase: AuthorUseCase, private val authorApi: AuthorApi, threadExecutor: ThreadExecutor, postExecutionThread: PostExecutionThread)
+    : UseCase(threadExecutor, postExecutionThread), NewAuthorFragmentMVP.Presenter {
 
     override fun mostrarAuthors() {
         authorUseCase.obtenerTodosAuthors(object : BaseSingleObserver<List<Author>>() {
@@ -40,8 +41,9 @@ class NewAuthorFragmentPresenter @Inject constructor(private val authorUseCase: 
         mView.onClickBtnGuardar()
         mView.onClickBtnBuscar()
         mView.onClickBtnMostrar()
-        mView.contadorNSegundos(40)
+//        mView.contadorNSegundos(40)
         mView.setupAdapterAuthors()
+        mView.onTextChangedDni()
     }
 
     override fun guardarAuthor() {
@@ -75,22 +77,24 @@ class NewAuthorFragmentPresenter @Inject constructor(private val authorUseCase: 
             when (e) {
                 is AuthorDuplicadoException -> mView.authorDuplicado(e.message.toString())
             }
-
         }
     }
 
     override fun buscarAuthor() {
         mView.dni?.let {
-            authorUseCase.buscarAuthorByDni(it, object : BaseSingleObserver<Author>() {
-                override fun onSuccess(t: Author) {
-                    mView.author = t
-                    mView.authorEncontrado()
-                }
+            authorUseCase.buscarAuthorByDni(it, BuscarAuthorObserver())
+        }
+    }
 
-                override fun onError(e: Throwable) {
-                    mView.notificarNoEncontrado()
-                }
-            })
+    inner class BuscarAuthorObserver : BaseSingleObserver<Author>() {
+        override fun onSuccess(t: Author) {
+            mView.author = t
+            mView.authorEncontrado()
+        }
+
+        override fun onError(e: Throwable) {
+            if (mView.authorNoEncontradoVarias)
+                mView.notificarNoEncontrado()
         }
     }
 
